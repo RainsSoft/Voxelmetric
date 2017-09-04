@@ -29,9 +29,9 @@ public class CustomMeshBlockConfig : BlockConfig
         m_Texture = world.TextureProvider.GetTextureCollection(_GetPropertyFromConfig(config, "texture", ""));
 
         Vector3 meshOffset;
-        meshOffset.x = Env.BlockSizeHalf + float.Parse(_GetPropertyFromConfig(config, "meshXOffset", "0"), CultureInfo.InvariantCulture);
-        meshOffset.y = Env.BlockSizeHalf + float.Parse(_GetPropertyFromConfig(config, "meshYOffset", "0"), CultureInfo.InvariantCulture);
-        meshOffset.z = Env.BlockSizeHalf + float.Parse(_GetPropertyFromConfig(config, "meshZOffset", "0"), CultureInfo.InvariantCulture);
+        meshOffset.x = Env.BLOCK_SIZE_HALF + float.Parse(_GetPropertyFromConfig(config, "meshXOffset", "0"), CultureInfo.InvariantCulture);
+        meshOffset.y = Env.BLOCK_SIZE_HALF + float.Parse(_GetPropertyFromConfig(config, "meshYOffset", "0"), CultureInfo.InvariantCulture);
+        meshOffset.z = Env.BLOCK_SIZE_HALF + float.Parse(_GetPropertyFromConfig(config, "meshZOffset", "0"), CultureInfo.InvariantCulture);
 
         SetUpMesh(world.Config.meshFolder + "/" + _GetPropertyFromConfig(config, "meshFileLocation", ""), meshOffset, out m_Triangles, out m_Vertices);
         return true;

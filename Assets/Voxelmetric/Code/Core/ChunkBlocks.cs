@@ -60,7 +60,7 @@ namespace Voxelmetric.Code.Core
             m_SideSize = sideSize;
             m_Pow = 1 + (int)Math.Log(sideSize, 2);
 
-            sideSize = m_SideSize + Env.ChunkPadding2;
+            sideSize = m_SideSize + Env.CHUNK_PADDING_2;
             blocks = Helpers.CreateArray1D<BlockData>(sideSize * sideSize * sideSize);
             Array.Clear(blocks, 0, blocks.Length);
         }
@@ -107,10 +107,10 @@ namespace Voxelmetric.Code.Core
                 return;
             NonEmptyBlocks = 0;
 
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
-            int index = Env.ChunkPadding + (Env.ChunkPadding << m_Pow) + (Env.ChunkPadding << (m_Pow << 1));
+            int index = Env.CHUNK_PADDING + (Env.CHUNK_PADDING << m_Pow) + (Env.CHUNK_PADDING << (m_Pow << 1));
             int yOffset = sizeWithPaddingPow2 - m_SideSize * sizeWithPadding;
             int zOffset = sizeWithPadding - m_SideSize;
             for (int y = 0; y < m_SideSize; ++y, index += yOffset)
@@ -650,7 +650,7 @@ namespace Voxelmetric.Code.Core
         /// <param name="blockData">A block to be placed on a given position</param>
         public void SetRange(ref Vector3Int posFrom, ref Vector3Int posTo, BlockData blockData)
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             int index = Helpers.GetChunkIndex1DFrom3D(posFrom.x, posFrom.y, posFrom.z, m_Pow);
@@ -678,7 +678,7 @@ namespace Voxelmetric.Code.Core
         /// <param name="blockData">A block to be placed on a given position</param>
         public void SetRangeRaw(ref Vector3Int posFrom, ref Vector3Int posTo, BlockData blockData)
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             int index = Helpers.GetChunkIndex1DFrom3D(posFrom.x, posFrom.y, posFrom.z, m_Pow);
@@ -716,7 +716,7 @@ namespace Voxelmetric.Code.Core
                 if (ntw.allowConnections)
                     ntw.server.BroadcastChange(globalPos, blockData, -1);
 
-                if (Features.UseDifferentialSerialization)
+                if (Features.USE_DIFFERENTIAL_SEIALIZATION)
                 {
                     // TODO: Memory unfriendly. Rethink the strategy
                     modifiedBlocks.Add(blockPos);
@@ -736,13 +736,13 @@ namespace Voxelmetric.Code.Core
 
         public void ReceiveChunkData(byte[] buffer)
         {
-            int index = BitConverter.ToInt32(buffer, VmServer.headerSize);
-            int size = BitConverter.ToInt32(buffer, VmServer.headerSize + 4);
+            int index = BitConverter.ToInt32(buffer, VmServer.HEADER_SIZE);
+            int size = BitConverter.ToInt32(buffer, VmServer.HEADER_SIZE + 4);
 
             if (receiveBuffer == null)
                 InitializeChunkDataReceive(index, size);
 
-            TranscribeChunkData(buffer, VmServer.leaderSize);
+            TranscribeChunkData(buffer, VmServer.LEADER_SIZE);
         }
 
         private void TranscribeChunkData(byte[] buffer, int offset)
@@ -776,7 +776,7 @@ namespace Voxelmetric.Code.Core
 
         private bool ExpandX(ref bool[] mask, ushort type, int y1, int z1, ref int x2, int y2, int z2)
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             int yOffset = sizeWithPaddingPow2 - (z2 - z1) * sizeWithPadding;
@@ -807,7 +807,7 @@ namespace Voxelmetric.Code.Core
 
         private bool ExpandY(ref bool[] mask, ushort type, int x1, int z1, int x2, ref int y2, int z2)
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
 
             int zOffset = sizeWithPadding - x2 + x1;
             int index0 = Helpers.GetChunkIndex1DFrom3D(x1, y2, z1, m_Pow);
@@ -837,7 +837,7 @@ namespace Voxelmetric.Code.Core
 
         private bool ExpandZ(ref bool[] mask, ushort type, int x1, int y1, int x2, int y2, ref int z2)
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             int yOffset = sizeWithPaddingPow2 - x2 + x1;
@@ -871,10 +871,10 @@ namespace Voxelmetric.Code.Core
         /// </summary>
         public void Compress()
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
             int sizeWithPaddingPow3 = sizeWithPaddingPow2 * sizeWithPadding;
-            int sizePlusPadding = m_SideSize + Env.ChunkPadding;
+            int sizePlusPadding = m_SideSize + Env.CHUNK_PADDING;
 
             var pools = Chunk.Pools;
             bool[] mask = pools.boolArrayPool.PopExact(sizeWithPaddingPow3);
@@ -958,7 +958,7 @@ namespace Voxelmetric.Code.Core
         /// </summary>
         public void Decompress()
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             for (int i = 0; i < blockCompressed.Count; i++)
@@ -1001,7 +1001,7 @@ namespace Voxelmetric.Code.Core
                 int sameBlockCount = 1;
                 BlockData lastBlockData = blocks[0];
 
-                int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+                int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
                 int sizeWithPaddingPow3 = sizeWithPadding * sizeWithPadding * sizeWithPadding;
 
                 for (int index = 1; index < sizeWithPaddingPow3; ++index)

@@ -159,7 +159,7 @@ namespace Voxelmetric.Examples
                     {
                         ++number[0];
                         Helpers.GetIndex3DFrom1D(number[0], out number[1], out number[2],
-                                                 out number[3], Env.ChunkSize, Env.ChunkSize);
+                                                 out number[3], Env.CHUNK_SIZE, Env.CHUNK_SIZE);
                     }, iters
                     );
                 Debug.LogFormat("GetIndex3DFrom1D -> out:{0}, x:{1},y:{2},z:{3}, time:{4}", number[0], number[1],
@@ -218,7 +218,7 @@ namespace Voxelmetric.Examples
                         ++number[2];
                         ++number[3];
                         number[0] = Helpers.GetIndex1DFrom3D(number[1], number[2], number[3],
-                                                             Env.ChunkSize, Env.ChunkSize);
+                                                             Env.CHUNK_SIZE, Env.CHUNK_SIZE);
                     }, iters
                     );
                 Debug.LogFormat("GetIndex1DFrom3D -> out:{0}, x:{1},y:{2},z:{3}, time:{4}", number[0], number[1],
@@ -276,9 +276,9 @@ namespace Voxelmetric.Examples
                 double t = Clock.BenchmarkTime(
                     () =>
                     {
-                        for (int y = 0; y<Env.ChunkSize; y++)
-                            for (int z = 0; z<Env.ChunkSize; z++)
-                                for (int x = 0; x<Env.ChunkSize; x++)
+                        for (int y = 0; y<Env.CHUNK_SIZE; y++)
+                            for (int z = 0; z<Env.CHUNK_SIZE; z++)
+                                for (int x = 0; x<Env.CHUNK_SIZE; x++)
                                     number[0] += noise.SingleSimplex(0, x, z);
                     }, iters);
                 Debug.LogFormat("noise.Generate 2D -> out:{0}, time:{1}", number[0],
@@ -290,9 +290,9 @@ namespace Voxelmetric.Examples
                 t = Clock.BenchmarkTime(
                     () =>
                     {
-                        for (int y = 0; y<Env.ChunkSize; y++)
-                            for (int z = 0; z<Env.ChunkSize; z++)
-                                for (int x = 0; x<Env.ChunkSize; x++)
+                        for (int y = 0; y<Env.CHUNK_SIZE; y++)
+                            for (int z = 0; z<Env.CHUNK_SIZE; z++)
+                                for (int x = 0; x<Env.CHUNK_SIZE; x++)
                                     number[0] += noise.SingleSimplex(0, x, y, z);
                     }, iters);
                 Debug.LogFormat("noise.Generate 3D -> out:{0}, time:{1}", number[0],
@@ -352,7 +352,7 @@ namespace Voxelmetric.Examples
                 for (int i = 1; i<=3; i++)
                 {
                     NoiseItem ni = new NoiseItem {noiseGen = new NoiseInterpolator()};
-                    ni.noiseGen.SetInterpBitStep(Env.ChunkSize, i);
+                    ni.noiseGen.SetInterpBitStep(Env.CHUNK_SIZE, i);
                     ni.lookupTable = Helpers.CreateArray1D<float>(ni.noiseGen.Size*ni.noiseGen.Size);
 
                     float[] number = {0};
@@ -360,9 +360,9 @@ namespace Voxelmetric.Examples
                         () =>
                         {
                             PrepareLookupTable2D(noise, ni);
-                            for (int y = 0; y<Env.ChunkSize; y++)
-                                for (int z = 0; z<Env.ChunkSize; z++)
-                                    for (int x = 0; x<Env.ChunkSize; x++)
+                            for (int y = 0; y<Env.CHUNK_SIZE; y++)
+                                for (int z = 0; z<Env.CHUNK_SIZE; z++)
+                                    for (int x = 0; x<Env.CHUNK_SIZE; x++)
                                         number[0] += ni.noiseGen.Interpolate(x, z, ni.lookupTable);
                         }, iters);
                     Debug.LogFormat("noise.Generate 2D -> out:{0}, time:{1}, downsample factor {2}", number[0],
@@ -374,7 +374,7 @@ namespace Voxelmetric.Examples
                 for (int i = 1; i<=3; i++)
                 {
                     NoiseItem ni = new NoiseItem {noiseGen = new NoiseInterpolator()};
-                    ni.noiseGen.SetInterpBitStep(Env.ChunkSize, i);
+                    ni.noiseGen.SetInterpBitStep(Env.CHUNK_SIZE, i);
                     ni.lookupTable = Helpers.CreateArray1D<float>(ni.noiseGen.Size*ni.noiseGen.Size*ni.noiseGen.Size);
 
                     float[] number = {0};
@@ -382,9 +382,9 @@ namespace Voxelmetric.Examples
                         () =>
                         {
                             PrepareLookupTable3D(noise, ni);
-                            for (int y = 0; y<Env.ChunkSize; y++)
-                                for (int z = 0; z<Env.ChunkSize; z++)
-                                    for (int x = 0; x<Env.ChunkSize; x++)
+                            for (int y = 0; y<Env.CHUNK_SIZE; y++)
+                                for (int z = 0; z<Env.CHUNK_SIZE; z++)
+                                    for (int x = 0; x<Env.CHUNK_SIZE; x++)
                                         number[0] += ni.noiseGen.Interpolate(x, y, z, ni.lookupTable);
                         }, iters);
                     Debug.LogFormat("noise.Generate 3D -> out:{0}, time:{1}, downsample factor {2}", number[0],
@@ -406,11 +406,11 @@ namespace Voxelmetric.Examples
                 ushort type = (ushort)r.Next(0, blockTypes);
                 
                 int index = 0;
-                for (int y = 0; y < Env.ChunkSize; ++y)
+                for (int y = 0; y < Env.CHUNK_SIZE; ++y)
                 {
-                    for (int z = 0; z < Env.ChunkSize; ++z)
+                    for (int z = 0; z < Env.CHUNK_SIZE; ++z)
                     {
-                        for (int x = 0; x < Env.ChunkSize; ++x, ++index)
+                        for (int x = 0; x < Env.CHUNK_SIZE; ++x, ++index)
                         {
                             int prob = r.Next(0, 99);
                             if (prob<probabiltyOfChange)
@@ -440,7 +440,7 @@ namespace Voxelmetric.Examples
                     s.AppendFormat("Compression -> out:{0}, time:{1}, boxes created: {2}, mem: {3}/{4}", number[0],
                                    (t/iters).ToString(CultureInfo.InvariantCulture), blocks.BlocksCompressed.Count,
                                    blocks.BlocksCompressed.Count*StructSerialization.TSSize<BlockDataAABB>.ValueSize,
-                                   Env.ChunkSizeWithPaddingPow3*StructSerialization.TSSize<BlockData>.ValueSize);
+                                   Env.CHUNK_SIZE_WITH_PADDING_POW_3*StructSerialization.TSSize<BlockData>.ValueSize);
                 }
                 Debug.Log(s);
                 writer.WriteLine(s);

@@ -58,7 +58,7 @@ namespace Voxelmetric.Code.Core.Serialization
         public bool IsBinarizeNecessary()
         {
             if (m_BlocksModified == null &&
-                !Features.UseDifferentialSerialization_ForceSaveHeaders &&
+                !Features.USE_DIFFERENTIAL_SEIALIZATION_FORCE_SAVE_HEADERS &&
                 !m_HadDifferentialChange)
                 return false;
 
@@ -70,7 +70,7 @@ namespace Voxelmetric.Code.Core.Serialization
             // Do not serialize if there's no chunk data and empty chunk serialization is turned off
             if (m_BlocksModified == null)
             {
-                if (!Features.UseDifferentialSerialization_ForceSaveHeaders &&
+                if (!Features.USE_DIFFERENTIAL_SEIALIZATION_FORCE_SAVE_HEADERS &&
                     !m_HadDifferentialChange
                     )
                     return false;
@@ -78,15 +78,15 @@ namespace Voxelmetric.Code.Core.Serialization
             }
 
             bw.Write(SaveVersion);
-            bw.Write((byte)(Features.UseDifferentialSerialization ? 1 : 0));
-            bw.Write(Env.ChunkSizePow3);
+            bw.Write((byte)(Features.USE_DIFFERENTIAL_SEIALIZATION ? 1 : 0));
+            bw.Write(Env.CHUNK_SIZE_POW_3);
             bw.Write(Chunk.Blocks.NonEmptyBlocks);
 
             int blockPosSize = StructSerialization.TSSize<BlockPos>.ValueSize;
             int blockDataSize = StructSerialization.TSSize<BlockData>.ValueSize;
 
             // Chunk data
-            if (Features.UseDifferentialSerialization)
+            if (Features.USE_DIFFERENTIAL_SEIALIZATION)
             {
                 if (m_BlocksModified == null)
                     bw.Write(0);
@@ -136,7 +136,7 @@ namespace Voxelmetric.Code.Core.Serialization
 
             // Current chunk size must match the saved chunk size
             int chunkBlocks = br.ReadInt32();
-            if (chunkBlocks != Env.ChunkSizePow3)
+            if (chunkBlocks != Env.CHUNK_SIZE_POW_3)
             {
                 success = false;
                 goto deserializeFail;
@@ -191,7 +191,7 @@ namespace Voxelmetric.Code.Core.Serialization
                 else
                 {
                     // If somebody switched from full to differential serialization, make it so that the next time the chunk is serialized it's saved as diff
-                    if (Features.UseDifferentialSerialization)
+                    if (Features.USE_DIFFERENTIAL_SEIALIZATION)
                         m_HadDifferentialChange = true;
 
                     int blkLenBytes = br.ReadInt32();
@@ -224,7 +224,7 @@ namespace Voxelmetric.Code.Core.Serialization
 
         public bool DoCompression()
         {
-            if (Features.UseDifferentialSerialization)
+            if (Features.USE_DIFFERENTIAL_SEIALIZATION)
             {
                 if (m_BlocksModified != null)
                 {
@@ -371,14 +371,14 @@ namespace Voxelmetric.Code.Core.Serialization
                 if (m_BlocksBytes != null)
                 {
                     int blockDataSize = StructSerialization.TSSize<BlockData>.ValueSize;
-                    int requestedByteSize = Env.ChunkSizePow3 * blockDataSize;
+                    int requestedByteSize = Env.CHUNK_SIZE_POW_3 * blockDataSize;
 
                     // Pop a large enough buffers from the pool
                     var bytes = pools.byteArrayPool.Pop(requestedByteSize);
                     {
                         // Decompress data
                         int decompressedLength = CLZF2.lzf_decompress(m_BlocksBytes, m_BlocksBytes.Length, ref bytes);
-                        if (decompressedLength != Env.ChunkSizePow3 * blockDataSize)
+                        if (decompressedLength != Env.CHUNK_SIZE_POW_3 * blockDataSize)
                         {
                             m_BlocksBytes = null;
                             return false;
@@ -392,14 +392,14 @@ namespace Voxelmetric.Code.Core.Serialization
                             fixed (byte* pSrc = bytes)
                             {
                                 int index = Helpers.ZeroChunkIndex;
-                                int yOffset = Env.ChunkSizeWithPaddingPow2 - Env.ChunkSize * Env.ChunkSizeWithPadding;
-                                int zOffset = Env.ChunkSizeWithPadding - Env.ChunkSize;
+                                int yOffset = Env.CHUNK_SIZE_WITH_PADDING_POW_2 - Env.CHUNK_SIZE * Env.CHUNK_SIZE_WITH_PADDING;
+                                int zOffset = Env.CHUNK_SIZE_WITH_PADDING - Env.CHUNK_SIZE;
 
-                                for (int y = 0; y < Env.ChunkSize; ++y, index += yOffset)
+                                for (int y = 0; y < Env.CHUNK_SIZE; ++y, index += yOffset)
                                 {
-                                    for (int z = 0; z < Env.ChunkSize; ++z, index += zOffset)
+                                    for (int z = 0; z < Env.CHUNK_SIZE; ++z, index += zOffset)
                                     {
-                                        for (int x = 0; x < Env.ChunkSize; ++x, i += blockDataSize, ++index)
+                                        for (int x = 0; x < Env.CHUNK_SIZE; ++x, i += blockDataSize, ++index)
                                         {
                                             BlockData* bd = (BlockData*)&pSrc[i];
 

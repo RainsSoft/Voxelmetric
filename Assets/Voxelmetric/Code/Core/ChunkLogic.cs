@@ -30,9 +30,9 @@ namespace Voxelmetric.Code.Core
                 m_RandomUpdateTime = 0;
 
                 Vector3Int randomVector3Int = new Vector3Int(
-                    Voxelmetric.resources.random.Next(0, Env.ChunkSize),
-                    Voxelmetric.resources.random.Next(0, Env.ChunkSize),
-                    Voxelmetric.resources.random.Next(0, Env.ChunkSize)
+                    Voxelmetric.resources.random.Next(0, Env.CHUNK_SIZE),
+                    Voxelmetric.resources.random.Next(0, Env.CHUNK_SIZE),
+                    Voxelmetric.resources.random.Next(0, Env.CHUNK_SIZE)
                     );
 
                 chunk.Blocks.GetBlock(ref randomVector3Int).RandomUpdate(chunk, ref randomVector3Int);

@@ -32,7 +32,7 @@ namespace Voxelmetric.Code.Builders.Collider
             //     |  |
             //     0--3
 
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             var blocks = chunk.Blocks;

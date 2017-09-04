@@ -40,8 +40,8 @@ namespace Voxelmetric.Code.Core.Operations
                         neighborBlocks = blocks.HandleNeighbor(ref m_Min, Direction.west);
                         if (neighborBlocks != null)
                         {
-                            Vector3Int from = new Vector3Int(Env.ChunkSize, m_Min.y, m_Min.z);
-                            Vector3Int to = new Vector3Int(Env.ChunkSize, m_Max.y, m_Max.z);
+                            Vector3Int from = new Vector3Int(Env.CHUNK_SIZE, m_Min.y, m_Min.z);
+                            Vector3Int to = new Vector3Int(Env.CHUNK_SIZE, m_Max.y, m_Max.z);
                             OnSetBlocksRaw(neighborBlocks, ref from, ref to);
                         }
                     }
@@ -51,8 +51,8 @@ namespace Voxelmetric.Code.Core.Operations
                         neighborBlocks = blocks.HandleNeighbor(ref m_Min, Direction.down);
                         if (neighborBlocks != null)
                         {
-                            Vector3Int from = new Vector3Int(m_Min.x, Env.ChunkSize, m_Min.z);
-                            Vector3Int to = new Vector3Int(m_Max.x, Env.ChunkSize, m_Max.z);
+                            Vector3Int from = new Vector3Int(m_Min.x, Env.CHUNK_SIZE, m_Min.z);
+                            Vector3Int to = new Vector3Int(m_Max.x, Env.CHUNK_SIZE, m_Max.z);
                             OnSetBlocksRaw(neighborBlocks, ref from, ref to);
                         }
                     }
@@ -62,8 +62,8 @@ namespace Voxelmetric.Code.Core.Operations
                         neighborBlocks = blocks.HandleNeighbor(ref m_Min, Direction.south);
                         if (neighborBlocks != null)
                         {
-                            Vector3Int from = new Vector3Int(m_Min.x, m_Min.y, Env.ChunkSize);
-                            Vector3Int to = new Vector3Int(m_Max.x, m_Max.y, Env.ChunkSize);
+                            Vector3Int from = new Vector3Int(m_Min.x, m_Min.y, Env.CHUNK_SIZE);
+                            Vector3Int to = new Vector3Int(m_Max.x, m_Max.y, Env.CHUNK_SIZE);
                             OnSetBlocksRaw(neighborBlocks, ref from, ref to);
                         }
                     }

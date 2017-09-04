@@ -131,8 +131,8 @@ namespace Voxelmetric.Examples
                     {
                         for (int i = 0; i<pf.path.Count-1; i++)
                         {
-                            Vector3 p0 = (Vector3)pf.path[i]+Env.HalfBlockOffset;
-                            Vector3 p1 = (Vector3)pf.path[i+1]+Env.HalfBlockOffset;
+                            Vector3 p0 = (Vector3)pf.path[i]+Env.halfBlockOffset;
+                            Vector3 p1 = (Vector3)pf.path[i+1]+Env.halfBlockOffset;
                             Debug.DrawLine(p0, p1, Color.red);
                         }
                     }

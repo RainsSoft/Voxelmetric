@@ -35,7 +35,7 @@ namespace Voxelmetric.Code
         }
 
         // Geometry mesh builder used for the terrain
-        private static readonly AMeshBuilder s_cubeMeshBuilder = new CubeMeshBuilder(Env.BlockSize, Env.ChunkSize);
+        private static readonly AMeshBuilder s_cubeMeshBuilder = new CubeMeshBuilder(Env.BLOCK_SIZE, Env.CHUNK_SIZE);
         public static AMeshBuilder CubeMeshBuilder
         {
             get
@@ -45,7 +45,7 @@ namespace Voxelmetric.Code
         }
 
         // Collider mesh builder used for the terrain
-        private static readonly AMeshBuilder s_cubeMeshColliderBuilder = new CubeMeshColliderBuilder(Env.BlockSize, Env.ChunkSize);
+        private static readonly AMeshBuilder s_cubeMeshColliderBuilder = new CubeMeshColliderBuilder(Env.BLOCK_SIZE, Env.CHUNK_SIZE);
         public static AMeshBuilder CubeMeshColliderBuilder
         {
             get

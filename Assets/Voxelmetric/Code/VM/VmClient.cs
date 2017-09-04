@@ -11,38 +11,38 @@ namespace Voxelmetric.Code.VM
 {
     public class VmClient : VmSocketState.IMessageHandler
     {
-        protected World world;
-        private IPAddress serverIP;
-        private Socket clientSocket;
+        protected World m_World;
+        private IPAddress m_ServerIP;
+        private Socket m_ClientSocket;
 
-        public bool connected;
+        public bool m_Connected;
 
-        private bool debugClient = false;
+        private bool m_DebugClient = false;
 
-        public IPAddress ServerIP { get { return serverIP; } }
+        public IPAddress ServerIP { get { return m_ServerIP; } }
 
         public VmClient(World world, IPAddress serverIP = null)
         {
-            this.world = world;
-            this.serverIP = serverIP;
+            this.m_World = world;
+            this.m_ServerIP = serverIP;
             ConnectToServer();
         }
 
         private void ConnectToServer()
         {
-            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            m_ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            if (serverIP == null)
+            if (m_ServerIP == null)
             {
                 string serverName = Dns.GetHostName();
                 Debug.Log("serverName='" + serverName + "'");
                 IPAddress serverAddress = Dns.GetHostAddresses(serverName)[0];
                 Debug.Log("serverAddress='" + serverAddress + "'");
-                serverIP = serverAddress;
+                m_ServerIP = serverAddress;
             }
-            IPEndPoint serverEndPoint = new IPEndPoint(serverIP, 8000);
+            IPEndPoint serverEndPoint = new IPEndPoint(m_ServerIP, 8000);
 
-            clientSocket.BeginConnect(serverEndPoint, OnConnect, null);
+            m_ClientSocket.BeginConnect(serverEndPoint, OnConnect, null);
         }
 
         private void OnConnect(IAsyncResult ar)
@@ -50,18 +50,18 @@ namespace Voxelmetric.Code.VM
             try
             {
 
-                if (clientSocket == null || !clientSocket.Connected)
+                if (m_ClientSocket == null || !m_ClientSocket.Connected)
                 {
                     Debug.Log("VmClient.OnConnect (" + Thread.CurrentThread.ManagedThreadId + "): "
                               + "server connection rejected because connection was shutdown or not started");
                     return;
                 }
 
-                clientSocket.EndConnect(ar);
-                connected = true;
+                m_ClientSocket.EndConnect(ar);
+                m_Connected = true;
 
                 VmSocketState socketState = new VmSocketState(this);
-                clientSocket.BeginReceive(socketState.buffer, 0, VmNetworking.bufferLength, SocketFlags.None, OnReceiveFromServer, socketState);
+                m_ClientSocket.BeginReceive(socketState.buffer, 0, VmNetworking.bufferLength, SocketFlags.None, OnReceiveFromServer, socketState);
             }
             catch (Exception ex)
             {
@@ -73,14 +73,14 @@ namespace Voxelmetric.Code.VM
         {
             try
             {
-                if (clientSocket == null || !clientSocket.Connected)
+                if (m_ClientSocket == null || !m_ClientSocket.Connected)
                 {
                     Debug.Log("VmClient.OnReceiveFromServer (" + Thread.CurrentThread.ManagedThreadId + "): "
                               + "server message rejected because connection was shutdown or not started");
                     return;
                 }
 
-                int received = clientSocket.EndReceive(ar);
+                int received = m_ClientSocket.EndReceive(ar);
                 if (received == 0)
                 {
                     Debug.Log("disconnected from server");
@@ -88,15 +88,15 @@ namespace Voxelmetric.Code.VM
                     return;
                 }
 
-                if (debugClient)
+                if (m_DebugClient)
                     Debug.Log("VmClient.OnReceiveFromServer (" + Thread.CurrentThread.ManagedThreadId + "): ");
 
                 VmSocketState socketState = ar.AsyncState as VmSocketState;
                 socketState.Receive(received, 0);
-                if (clientSocket != null && clientSocket.Connected)
+                if (m_ClientSocket != null && m_ClientSocket.Connected)
                 {
                     // Should be able to use a mutex but unity doesn't seem to like it
-                    clientSocket.BeginReceive(socketState.buffer, 0, VmNetworking.bufferLength, SocketFlags.None, OnReceiveFromServer, socketState);
+                    m_ClientSocket.BeginReceive(socketState.buffer, 0, VmNetworking.bufferLength, SocketFlags.None, OnReceiveFromServer, socketState);
                 }
             }
             catch (Exception ex)
@@ -107,12 +107,12 @@ namespace Voxelmetric.Code.VM
 
         private void Send(byte[] buffer)
         {
-            if (!connected)
+            if (!m_Connected)
                 return;
 
             try
             {
-                clientSocket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, OnSend, null);
+                m_ClientSocket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, OnSend, null);
             }
             catch (Exception ex)
             {
@@ -124,8 +124,8 @@ namespace Voxelmetric.Code.VM
         {
             try
             {
-                clientSocket.EndSend(ar);
-                if (debugClient)
+                m_ClientSocket.EndSend(ar);
+                if (m_DebugClient)
                     Debug.Log("VmClient.OnSend (" + Thread.CurrentThread.ManagedThreadId + "): send ended");
             }
             catch (Exception ex)
@@ -167,7 +167,7 @@ namespace Voxelmetric.Code.VM
 
         public void RequestChunk(Vector3Int pos)
         {
-            if (debugClient)
+            if (m_DebugClient)
                 Debug.Log("VmClient.RequestChunk (" + Thread.CurrentThread.ManagedThreadId + "): " + pos);
 
             byte[] message = new byte[13];
@@ -179,7 +179,7 @@ namespace Voxelmetric.Code.VM
         private void ReceiveChunk(byte[] data)
         {
             Vector3Int pos = new Vector3Int().FromBytes(data, 1);
-            Chunk chunk = world.Chunks.Get(ref pos);
+            Chunk chunk = m_World.Chunks.Get(ref pos);
             // for now just issue an error if it isn't yet loaded
             if (chunk == null)
             {
@@ -203,17 +203,17 @@ namespace Voxelmetric.Code.VM
 
         private void ReceiveChange(ref Vector3Int pos, BlockData block)
         {
-            world.Blocks.Modify(ref pos, block, false);
+            m_World.Blocks.Modify(ref pos, block, false);
         }
 
         public void Disconnect()
         {
-            if (clientSocket != null)// && clientSocket.Connected)
+            if (m_ClientSocket != null)// && clientSocket.Connected)
             {
                 //clientSocket.Shutdown(SocketShutdown.Both);
-                clientSocket.Close();
-                connected = false;
-                clientSocket = null;
+                m_ClientSocket.Close();
+                m_Connected = false;
+                m_ClientSocket = null;
             }
         }
 

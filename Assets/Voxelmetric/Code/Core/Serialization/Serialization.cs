@@ -8,7 +8,7 @@ namespace Voxelmetric.Code.Core.Serialization
     {
         private static string SaveLocation(string worldName)
         {
-            string saveLocation = Directories.SaveFolder + "/" + worldName + "/";
+            string saveLocation = Directories.SAVE_FOLDER + "/" + worldName + "/";
 
             if (!Directory.Exists(saveLocation))
                 Directory.CreateDirectory(saveLocation);

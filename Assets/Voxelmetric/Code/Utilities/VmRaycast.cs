@@ -17,7 +17,7 @@ namespace Voxelmetric.Code.Utilities
 
             //Transform the ray to match the rotation and position of the world:
             pos -= world.transform.position;
-            pos -= new Vector3(Env.BlockSizeHalf, Env.BlockSizeHalf, Env.BlockSizeHalf);
+            pos -= new Vector3(Env.BLOCK_SIZE_HALF, Env.BLOCK_SIZE_HALF, Env.BLOCK_SIZE_HALF);
             pos = Quaternion.Inverse(world.gameObject.transform.rotation) * pos;
             dir = Quaternion.Inverse(world.transform.rotation) * dir;
 

@@ -13,51 +13,51 @@ namespace Voxelmetric.Code.VM
 {
     public class VmServer
     {
-        protected World world;
-        private IPAddress serverIP;
-        private Socket serverSocket;
+        protected World m_World;
+        private IPAddress m_ServerIP;
+        private Socket m_ServerSocket;
 
-        private Dictionary<int, ClientConnection> clients = new Dictionary<int, ClientConnection>();
-        private int nextId = 0;
+        private Dictionary<int, ClientConnection> m_Clients = new Dictionary<int, ClientConnection>();
+        private int m_NextId = 0;
 
-        private bool debugServer = false;
+        private bool m_DebugServer = false;
 
-        public IPAddress ServerIP { get { return serverIP; } }
+        public IPAddress ServerIP { get { return m_ServerIP; } }
 
         public int ClientCount
         {
             get
             {
-                lock (clients)
+                lock (m_Clients)
                 {
-                    return clients.Count;
+                    return m_Clients.Count;
                 }
             }
         }
 
         public VmServer(World world)
         {
-            this.world = world;
+            this.m_World = world;
 
             try
             {
                 AddressFamily addressFamily = AddressFamily.InterNetwork;
-                serverSocket = new Socket(addressFamily, SocketType.Stream, ProtocolType.Tcp);
+                m_ServerSocket = new Socket(addressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 string serverName = Dns.GetHostName();
-                if (debugServer) Debug.Log("serverName='" + serverName + "'");
+                if (m_DebugServer) Debug.Log("serverName='" + serverName + "'");
                 foreach (IPAddress serverAddress in Dns.GetHostAddresses(serverName))
                 {
-                    if (debugServer) Debug.Log("serverAddress='" + serverAddress + "', AddressFamily=" + serverAddress.AddressFamily);
+                    if (m_DebugServer) Debug.Log("serverAddress='" + serverAddress + "', AddressFamily=" + serverAddress.AddressFamily);
                     if (serverAddress.AddressFamily != addressFamily)
                         continue;
-                    serverIP = serverAddress;
+                    m_ServerIP = serverAddress;
                     break;
                 }
-                IPEndPoint serverEndPoint = new IPEndPoint(serverIP, 8000);
-                serverSocket.Bind(serverEndPoint);
-                serverSocket.Listen(0);
-                serverSocket.BeginAccept(OnJoinServer, null);
+                IPEndPoint serverEndPoint = new IPEndPoint(m_ServerIP, 8000);
+                m_ServerSocket.Bind(serverEndPoint);
+                m_ServerSocket.Listen(0);
+                m_ServerSocket.BeginAccept(OnJoinServer, null);
             }
             catch (Exception ex)
             {
@@ -69,21 +69,21 @@ namespace Voxelmetric.Code.VM
         {
             try
             {
-                if (serverSocket == null)
+                if (m_ServerSocket == null)
                 {
                     Debug.Log("VmServer.OnJoinServer (" + Thread.CurrentThread.ManagedThreadId + "): "
                               + "client connection rejected because server was not started");
                     return;
                 }
-                Socket newClientSocket = serverSocket.EndAccept(ar);
-                lock (clients)
+                Socket newClientSocket = m_ServerSocket.EndAccept(ar);
+                lock (m_Clients)
                 {
-                    ClientConnection connection = new ClientConnection(clients.Count, newClientSocket, this);
-                    clients.Add(nextId, connection);
-                    nextId++;
+                    ClientConnection connection = new ClientConnection(m_Clients.Count, newClientSocket, this);
+                    m_Clients.Add(m_NextId, connection);
+                    m_NextId++;
                 }
 
-                serverSocket.BeginAccept(OnJoinServer, null);
+                m_ServerSocket.BeginAccept(OnJoinServer, null);
             }
             catch (Exception ex)
             {
@@ -93,34 +93,34 @@ namespace Voxelmetric.Code.VM
 
         internal void RemoveClient(int id)
         {
-            lock (clients)
+            lock (m_Clients)
             {
-                clients[id] = null;
+                m_Clients[id] = null;
             }
         }
 
         public void Disconnect()
         {
-            lock (clients)
+            lock (m_Clients)
             {
-                var clientConnections = clients.Values.ToList();
+                var clientConnections = m_Clients.Values.ToList();
                 foreach (var client in clientConnections)
                     client.Disconnect();
             }
 
-            if (serverSocket != null)
+            if (m_ServerSocket != null)
             {// && serverSocket.Connected) {
                 //serverSocket.Shutdown(SocketShutdown.Both);
-                serverSocket.Close();
-                serverSocket = null;
+                m_ServerSocket.Close();
+                m_ServerSocket = null;
             }
         }
 
         public void SendToClient(byte[] data, int client)
         {
-            lock (clients)
+            lock (m_Clients)
             {
-                ClientConnection clientConnection = clients[client];
+                ClientConnection clientConnection = m_Clients[client];
                 if (clientConnection != null)
                     clientConnection.Send(data);
             }
@@ -129,13 +129,13 @@ namespace Voxelmetric.Code.VM
         public void RequestChunk(ref Vector3Int pos, int id)
         {
             Chunk chunk = null;
-            if (world == null)
+            if (m_World == null)
             {
                 Debug.LogError("VmServer.RequestChunk (" + Thread.CurrentThread.ManagedThreadId + "): "
                                + " world not set (" + pos + ", " + id + ")");
             }
             else
-                chunk = world.Chunks.Get(ref pos);
+                chunk = m_World.Chunks.Get(ref pos);
 
             byte[] data;
 
@@ -150,14 +150,14 @@ namespace Voxelmetric.Code.VM
             else
                 data = chunk.Blocks.ToBytes();
 
-            if (debugServer)
+            if (m_DebugServer)
                 Debug.Log("VmServer.RequestChunk (" + Thread.CurrentThread.ManagedThreadId + "): " + id
                           + " " + pos);
 
             SendChunk(pos, data, id);
         }
 
-        public const int headerSize = 13, leaderSize = headerSize + 8;
+        public const int HEADER_SIZE = 13, LEADER_SIZE = HEADER_SIZE + 8;
 
         protected void SendChunk(Vector3Int pos, byte[] chunkData, int id)
         {
@@ -167,16 +167,16 @@ namespace Voxelmetric.Code.VM
                 byte[] message = new byte[VmNetworking.bufferLength];
                 message[0] = VmNetworking.transmitChunkData;
                 pos.ToBytes().CopyTo(message, 1);
-                BitConverter.GetBytes(chunkDataIndex).CopyTo(message, headerSize);
-                BitConverter.GetBytes(chunkData.Length).CopyTo(message, headerSize + 4);
+                BitConverter.GetBytes(chunkDataIndex).CopyTo(message, HEADER_SIZE);
+                BitConverter.GetBytes(chunkData.Length).CopyTo(message, HEADER_SIZE + 4);
 
-                if (debugServer)
+                if (m_DebugServer)
                     Debug.Log("VmServer.SendChunk (" + Thread.CurrentThread.ManagedThreadId + "): " + pos
                               + ", chunkDataIndex=" + chunkDataIndex
                               + ", chunkData.Length=" + chunkData.Length
                               + ", buffer=" + message.Length);
 
-                for (int i = leaderSize; i < message.Length; i++)
+                for (int i = LEADER_SIZE; i < message.Length; i++)
                 {
                     message[i] = chunkData[chunkDataIndex];
                     chunkDataIndex++;
@@ -191,9 +191,9 @@ namespace Voxelmetric.Code.VM
 
         public void BroadcastChange(Vector3Int pos, BlockData blockData, int excludedUser)
         {
-            lock (clients)
+            lock (m_Clients)
             {
-                if (clients.Count == 0)
+                if (m_Clients.Count == 0)
                     return;
 
                 byte[] data = new byte[15];
@@ -202,7 +202,7 @@ namespace Voxelmetric.Code.VM
                 pos.ToBytes().CopyTo(data, 1);
                 BlockData.ToByteArray(blockData).CopyTo(data, 13);
 
-                foreach (var client in clients.Values)
+                foreach (var client in m_Clients.Values)
                 {
                     if (excludedUser == -1 || client.ID != excludedUser)
                         client.Send(data);
@@ -213,7 +213,7 @@ namespace Voxelmetric.Code.VM
         public void ReceiveChange(ref Vector3Int pos, ushort data, int id)
         {
             BlockData blockData = new BlockData(data);
-            world.Blocks.Modify(ref pos, blockData, true);
+            m_World.Blocks.Modify(ref pos, blockData, true);
             BroadcastChange(pos, blockData, id);
         }
     }

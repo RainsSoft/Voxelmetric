@@ -19,7 +19,7 @@ namespace Voxelmetric.Code.Builders
 
         private bool ExpandX(ChunkBlocks blocks, ref bool[] mask, Block block, int y1, int z1, ref int x2, int y2, int z2)
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             int yOffset = sizeWithPaddingPow2 - (z2 - z1) * sizeWithPadding;
@@ -50,7 +50,7 @@ namespace Voxelmetric.Code.Builders
 
         private bool ExpandY(ChunkBlocks blocks, ref bool[] mask, Block block, int x1, int z1, int x2, ref int y2, int z2)
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
 
             int zOffset = sizeWithPadding - x2 + x1;
             int index0 = Helpers.GetChunkIndex1DFrom3D(x1, y2, z1, m_Pow);
@@ -80,7 +80,7 @@ namespace Voxelmetric.Code.Builders
 
         private bool ExpandZ(ChunkBlocks blocks, ref bool[] mask, Block block, int x1, int y1, int x2, int y2, ref int z2)
         {
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             int yOffset = sizeWithPaddingPow2 - x2 + x1;
@@ -114,7 +114,7 @@ namespace Voxelmetric.Code.Builders
             var blocks = chunk.Blocks;
             var pools = chunk.Pools;
 
-            int sizeWithPadding = m_SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = m_SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
             int sizeWithPaddingPow3 = sizeWithPaddingPow2 * sizeWithPadding;
 
@@ -123,7 +123,7 @@ namespace Voxelmetric.Code.Builders
 
             // This compression is essentialy RLE. However, instead of working on 1 axis
             // it works in 3 dimensions.
-            int index = Env.ChunkPadding + (Env.ChunkPadding << m_Pow) + (Env.ChunkPadding << (m_Pow << 1));
+            int index = Env.CHUNK_PADDING + (Env.CHUNK_PADDING << m_Pow) + (Env.CHUNK_PADDING << (m_Pow << 1));
             int yOffset = sizeWithPaddingPow2 - m_SideSize * sizeWithPadding;
             int zOffset = sizeWithPadding - m_SideSize;
             for (int y = 0; y < m_SideSize; ++y, index += yOffset)

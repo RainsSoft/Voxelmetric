@@ -27,8 +27,8 @@ namespace Voxelmetric.Code.Utilities
         private readonly float range = 0.5f;
         private readonly float distanceFromStartToTarget = 0;
 
-        public enum Status { stopped, working, failed, succeeded };
-        public Status status;
+        public enum Status { STOPPED, WORKING, FAILED, SUCCEEDED };
+        public Status m_Status;
 
         private struct Heuristics
         {
@@ -65,7 +65,7 @@ namespace Voxelmetric.Code.Utilities
 
             distanceFromStartToTarget = start.Distance2(ref target);
             open.Add(start, new Heuristics(0, distanceFromStartToTarget, start));
-            status = Status.working;
+            m_Status = Status.WORKING;
             WorkPoolManager.Add(
                 new ThreadPoolItem<PathFinder>(
                     Globals.WorkPool,
@@ -79,7 +79,7 @@ namespace Voxelmetric.Code.Utilities
 
         private void ComputePath()
         {
-            while (status == Status.working)
+            while (m_Status == Status.WORKING)
             {
                 ProcessBest();
             }
@@ -103,12 +103,12 @@ namespace Voxelmetric.Code.Utilities
 
         }
 
-        private static readonly Vector3Int FailedPos = new Vector3Int(0, int.MaxValue, 0);
+        private static readonly Vector3Int failedPos = new Vector3Int(0, int.MaxValue, 0);
 
         private void ProcessBest()
         {
             float shortestDist = distanceFromStartToTarget * MAX_DIST_TO_TRAVEL_MULTIPLIER + MAX_DIST_TO_TRAVEL_AFTER_DIRECT;
-            Vector3Int bestPos = FailedPos;
+            Vector3Int bestPos = failedPos;
 
             foreach (var tile in open)
             {
@@ -125,13 +125,13 @@ namespace Voxelmetric.Code.Utilities
             if (target.Distance2(ref bestPos) <= range * range)
             {
                 PathComplete(bestPos);
-                status = Status.succeeded;
+                m_Status = Status.SUCCEEDED;
                 return;
             }
 
-            if (bestPos == FailedPos)
+            if (bestPos == failedPos)
             {
-                status = Status.failed;
+                m_Status = Status.FAILED;
             }
 
             ProcessTile(bestPos);

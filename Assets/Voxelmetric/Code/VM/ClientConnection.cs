@@ -9,19 +9,19 @@ namespace Voxelmetric.Code.VM
 {
     internal class ClientConnection : VmSocketState.IMessageHandler
     {
-        private Socket socket;
-        private VmServer server;
+        private Socket m_Socket;
+        private VmServer m_Server;
 
-        private bool debugClientConnection = false;
+        private bool m_DebugClientConnection = false;
 
         public int ID { get; private set; }
 
         public ClientConnection(int ID, Socket socket, VmServer server)
         {
             this.ID = ID;
-            this.socket = socket;
-            this.server = server;
-            if (debugClientConnection)
+            this.m_Socket = socket;
+            this.m_Server = server;
+            if (m_DebugClientConnection)
                 Debug.Log("ClientConnection.ClientConnection (" + Thread.CurrentThread.ManagedThreadId + "): "
                           + "Client " + ID + " has connected");
 
@@ -33,30 +33,30 @@ namespace Voxelmetric.Code.VM
         {
             try
             {
-                if (socket == null || !socket.Connected)
+                if (m_Socket == null || !m_Socket.Connected)
                 {
                     Debug.Log("ClientConnection.OnReceiveFromClient (" + Thread.CurrentThread.ManagedThreadId + "): "
                               + "client message rejected because connection was shutdown or not started");
                     return;
                 }
 
-                int received = socket.EndReceive(ar);
+                int received = m_Socket.EndReceive(ar);
                 if (received == 0)
                 {
                     Disconnect();
                     return;
                 }
 
-                if (debugClientConnection)
+                if (m_DebugClientConnection)
                     Debug.Log("ClientConnection.OnReceiveFromClient (" + Thread.CurrentThread.ManagedThreadId + "): " + ID);
 
                 VmSocketState socketState = ar.AsyncState as VmSocketState;
                 socketState.Receive(received, 0);
 
-                if (socket != null && socket.Connected)
+                if (m_Socket != null && m_Socket.Connected)
                 {
                     // Should be able to use a mutex but unity doesn't seem to like it
-                    socket.BeginReceive(socketState.buffer, 0, VmNetworking.bufferLength, SocketFlags.None, OnReceiveFromClient, socketState);
+                    m_Socket.BeginReceive(socketState.buffer, 0, VmNetworking.bufferLength, SocketFlags.None, OnReceiveFromClient, socketState);
                 }
             }
             catch (Exception ex)
@@ -87,16 +87,16 @@ namespace Voxelmetric.Code.VM
                 case VmNetworking.SendBlockChange:
                     pos = pos.FromBytes(receivedData, 1);
                     ushort data = BlockData.RestoreBlockData(receivedData, 13);
-                    server.ReceiveChange(ref pos, data, ID);
+                    m_Server.ReceiveChange(ref pos, data, ID);
                     break;
                 case VmNetworking.RequestChunkData:
                     pos = pos.FromBytes(receivedData, 1);
 
-                    if (debugClientConnection)
+                    if (m_DebugClientConnection)
                         Debug.Log("ClientConnection.HandleMessage (" + Thread.CurrentThread.ManagedThreadId + "): " + ID
                                   + " " + pos);
 
-                    server.RequestChunk(ref pos, ID);
+                    m_Server.RequestChunk(ref pos, ID);
                     break;
             }
         }
@@ -105,7 +105,7 @@ namespace Voxelmetric.Code.VM
         {
             try
             {
-                socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, OnSend, socket);
+                m_Socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, OnSend, m_Socket);
             }
             catch (Exception ex)
             {
@@ -117,7 +117,7 @@ namespace Voxelmetric.Code.VM
         {
             try
             {
-                socket.EndSend(ar);
+                m_Socket.EndSend(ar);
             }
             catch (Exception ex)
             {
@@ -127,23 +127,23 @@ namespace Voxelmetric.Code.VM
 
         public void Disconnect()
         {
-            if (debugClientConnection)
+            if (m_DebugClientConnection)
                 Debug.Log("ClientConnection.Disconnect (" + Thread.CurrentThread.ManagedThreadId + "): "
                           + "Client " + ID + " has disconnected");
             try
             {
-                if (socket != null)
+                if (m_Socket != null)
                 {// && socket.Connected) {
                     //socket.Shutdown(SocketShutdown.Both);
-                    socket.Close();
-                    socket = null;
+                    m_Socket.Close();
+                    m_Socket = null;
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogError(ex);
             }
-            server.RemoveClient(ID);
+            m_Server.RemoveClient(ID);
         }
     }
 }

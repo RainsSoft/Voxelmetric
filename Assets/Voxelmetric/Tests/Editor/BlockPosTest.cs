@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using UnityEngine;
 using Voxelmetric.Code;
 using Voxelmetric.Code.Core;
@@ -7,9 +7,9 @@ using Voxelmetric.Code.Data_types;
 public class BlockPosTest {
     [Test]
     public void ContainingChunkCoordinatesTest() {
-        for(int x=-Env.ChunkSize; x<=2*Env.ChunkSize; x++)
-            for (int y = -Env.ChunkSize; y <= 2 * Env.ChunkSize; y++)
-                for (int z = -Env.ChunkSize; z <= 2 * Env.ChunkSize; z++)
+        for(int x=-Env.CHUNK_SIZE; x<=2*Env.CHUNK_SIZE; x++)
+            for (int y = -Env.CHUNK_SIZE; y <= 2 * Env.CHUNK_SIZE; y++)
+                for (int z = -Env.CHUNK_SIZE; z <= 2 * Env.CHUNK_SIZE; z++)
                     AssertContainingChunkCoordinates(new Vector3Int(x, y, z));
     }
 
@@ -19,7 +19,7 @@ public class BlockPosTest {
 
     //returns the position of the chunk containing this block
     private static Vector3Int ExpContainingChunkCoordinates(Vector3Int pos) {
-        int chunkSize = Env.ChunkSize;
+        int chunkSize = Env.CHUNK_SIZE;
 
         int cx = Mathf.FloorToInt(pos.x / (float)chunkSize) * chunkSize;
         int cy = Mathf.FloorToInt(pos.y / (float)chunkSize) * chunkSize;

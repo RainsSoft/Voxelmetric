@@ -18,12 +18,12 @@ namespace Voxelmetric.Code.Load_Resources.Textures
             {
                 case Direction.up:
                 case Direction.down:
-                    return v + (h * Env.ChunkSizeWithPadding); // pos.Add(v, 0, h);
+                    return v + (h * Env.CHUNK_SIZE_WITH_PADDING); // pos.Add(v, 0, h);
                 case Direction.north:
                 case Direction.south:
-                    return v + (h * Env.ChunkSizeWithPaddingPow2); //pos.Add(v, h, 0);
+                    return v + (h * Env.CHUNK_SIZE_WITH_PADDING_POW_2); //pos.Add(v, h, 0);
                 default: //case Direction.east://case Direction.west:
-                    return h * Env.ChunkSizeWithPaddingPow2 + v * Env.ChunkSizeWithPadding; //pos.Add(0, h, v);
+                    return h * Env.CHUNK_SIZE_WITH_PADDING_POW_2 + v * Env.CHUNK_SIZE_WITH_PADDING; //pos.Add(0, h, v);
             }
         }
 

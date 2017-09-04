@@ -35,9 +35,9 @@ public class MagicaMeshBlockConfig : BlockConfig
         Solid = _GetPropertyFromConfig(config, "solid", false);
 
         m_MeshOffset = new Vector3(
-            Env.BlockSizeHalf + float.Parse(_GetPropertyFromConfig(config, "meshXOffset", "0"), CultureInfo.InvariantCulture),
-            Env.BlockSizeHalf + float.Parse(_GetPropertyFromConfig(config, "meshYOffset", "0"), CultureInfo.InvariantCulture),
-            Env.BlockSizeHalf + float.Parse(_GetPropertyFromConfig(config, "meshZOffset", "0"), CultureInfo.InvariantCulture)
+            Env.BLOCK_SIZE_HALF + float.Parse(_GetPropertyFromConfig(config, "meshXOffset", "0"), CultureInfo.InvariantCulture),
+            Env.BLOCK_SIZE_HALF + float.Parse(_GetPropertyFromConfig(config, "meshYOffset", "0"), CultureInfo.InvariantCulture),
+            Env.BLOCK_SIZE_HALF + float.Parse(_GetPropertyFromConfig(config, "meshZOffset", "0"), CultureInfo.InvariantCulture)
         );
         m_Path = _GetPropertyFromConfig(config, "meshFileLocation", "");
 
@@ -62,7 +62,7 @@ public class MagicaMeshBlockConfig : BlockConfig
         FileStream fs = null;
         try
         {
-            string fullPath = Directories.ResourcesFolder + "/" + meshLocation + ".vox";
+            string fullPath = Directories.RESOURCES_FOLDER + "/" + meshLocation + ".vox";
             fs = new FileStream(fullPath, FileMode.Open);
             using (BinaryReader br = new BinaryReader(fs))
             {
@@ -81,9 +81,9 @@ public class MagicaMeshBlockConfig : BlockConfig
                     size = mvchunk.sizeZ;
 
                 // Determine the necessary size
-                size += Env.ChunkPadding2;
+                size += Env.CHUNK_PADDING_2;
                 int pow = 1 + (int)Math.Log(size, 2);
-                size = (1 << pow) - Env.ChunkPadding2;
+                size = (1 << pow) - Env.CHUNK_PADDING_2;
 
                 // Create a temporary chunk object
                 Chunk chunk = new Chunk(size);

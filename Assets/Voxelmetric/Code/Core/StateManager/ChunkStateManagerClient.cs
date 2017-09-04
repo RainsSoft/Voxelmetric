@@ -230,7 +230,7 @@ namespace Voxelmetric.Code.Core.StateManager
             m_CompletedStates = m_CompletedStates.Reset(CurrStateLoadData);
             m_CompletedStatesSafe = m_CompletedStates;
 
-            if (Features.UseSerialization)
+            if (Features.USE_SERIALIZATION)
             {
                 var task = Globals.MemPools.SMTaskPI.Pop();
                 m_PoolState = m_PoolState.Set(ChunkPoolItemState.TaskPI);
@@ -243,8 +243,8 @@ namespace Voxelmetric.Code.Core.StateManager
                 return true;
             }
 
-            OnLoadDataDone(this, false);
-            return false;
+            //OnLoadDataDone(this, false);
+            //return false;
         }
 
         #endregion Load chunk data
@@ -294,7 +294,7 @@ namespace Voxelmetric.Code.Core.StateManager
             m_CompletedStates = m_CompletedStates.Reset(CurrStatePrepareGenerate);
             m_CompletedStatesSafe = m_CompletedStates;
 
-            if (Features.UseSerialization)
+            if (Features.USE_SERIALIZATION)
             {
                 var task = Globals.MemPools.SMThreadPI.Pop();
                 m_PoolState = m_PoolState.Set(ChunkPoolItemState.ThreadPI);
@@ -307,8 +307,8 @@ namespace Voxelmetric.Code.Core.StateManager
                 return true;
             }
 
-            OnPrepareGenerateDone(this, false);
-            return false;
+            //OnPrepareGenerateDone(this, false);
+            //return false;
         }
 
         #endregion
@@ -324,7 +324,7 @@ namespace Voxelmetric.Code.Core.StateManager
             chunk.World.TerrainGen.GenerateTerrain(chunk);
 
             // Commit serialization changes if any
-            if (Features.UseSerialization)
+            if (Features.USE_SERIALIZATION)
                 stateManager.save.CommitChanges();
 
             // Calculate the amount of non-empty blocks
@@ -385,7 +385,7 @@ namespace Voxelmetric.Code.Core.StateManager
 
         private static void OnPrepareSaveDataDone(ChunkStateManagerClient stateManager, bool success)
         {
-            if (Features.UseSerialization)
+            if (Features.USE_SERIALIZATION)
             {
                 if (!success)
                 {
@@ -414,7 +414,7 @@ namespace Voxelmetric.Code.Core.StateManager
             m_CompletedStates = m_CompletedStates.Reset(CurrStatePrepareSaveData);
             m_CompletedStatesSafe = m_CompletedStates;
 
-            if (Features.UseSerialization)
+            if (Features.USE_SERIALIZATION)
             {
                 save.ConsumeChanges();
 
@@ -429,8 +429,8 @@ namespace Voxelmetric.Code.Core.StateManager
                 return true;
             }
 
-            OnPrepareSaveDataDone(this, false);
-            return false;
+            //OnPrepareSaveDataDone(this, false);
+            //return false;
         }
 
         #endregion Save chunk data
@@ -447,7 +447,7 @@ namespace Voxelmetric.Code.Core.StateManager
 
         private static void OnSaveDataDone(ChunkStateManagerClient stateManager, bool success)
         {
-            if (Features.UseSerialization)
+            if (Features.USE_SERIALIZATION)
             {
                 if (success)
                     // Notify listeners in case of success
@@ -475,7 +475,7 @@ namespace Voxelmetric.Code.Core.StateManager
             m_CompletedStates = m_CompletedStates.Reset(CurrStateSaveData);
             m_CompletedStatesSafe = m_CompletedStates;
 
-            if (Features.UseSerialization)
+            if (Features.USE_SERIALIZATION)
             {
                 var task = Globals.MemPools.SMTaskPI.Pop();
                 m_PoolState = m_PoolState.Set(ChunkPoolItemState.TaskPI);
@@ -488,8 +488,8 @@ namespace Voxelmetric.Code.Core.StateManager
                 return true;
             }
 
-            OnSaveDataDone(this, false);
-            return false;
+            //OnSaveDataDone(this, false);
+            //return false;
         }
 
         #endregion Save chunk data
@@ -517,8 +517,8 @@ namespace Voxelmetric.Code.Core.StateManager
         private void OnSynchronizeEdges()
         {
             int chunkSize1 = Chunk.SideSize - 1;
-            int sizePlusPadding = Chunk.SideSize + Env.ChunkPadding;
-            int sizeWithPadding = Chunk.SideSize + Env.ChunkPadding2;
+            int sizePlusPadding = Chunk.SideSize + Env.CHUNK_PADDING;
+            int sizeWithPadding = Chunk.SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
             int chunkIterXY = sizeWithPaddingPow2 - sizeWithPadding;
 
@@ -539,12 +539,12 @@ namespace Voxelmetric.Code.Core.StateManager
                 {
                     switch ((Direction)i)
                     {
-                        case Direction.up: neighborPos = Chunk.Pos.Add(0, Env.ChunkSize, 0); break;
-                        case Direction.down: neighborPos = Chunk.Pos.Add(0, -Env.ChunkSize, 0); break;
-                        case Direction.north: neighborPos = Chunk.Pos.Add(0, 0, Env.ChunkSize); break;
-                        case Direction.south: neighborPos = Chunk.Pos.Add(0, 0, -Env.ChunkSize); break;
-                        case Direction.east: neighborPos = Chunk.Pos.Add(Env.ChunkSize, 0, 0); break;
-                        default: neighborPos = Chunk.Pos.Add(-Env.ChunkSize, 0, 0); break;
+                        case Direction.up: neighborPos = Chunk.Pos.Add(0, Env.CHUNK_SIZE, 0); break;
+                        case Direction.down: neighborPos = Chunk.Pos.Add(0, -Env.CHUNK_SIZE, 0); break;
+                        case Direction.north: neighborPos = Chunk.Pos.Add(0, 0, Env.CHUNK_SIZE); break;
+                        case Direction.south: neighborPos = Chunk.Pos.Add(0, 0, -Env.CHUNK_SIZE); break;
+                        case Direction.east: neighborPos = Chunk.Pos.Add(Env.CHUNK_SIZE, 0, 0); break;
+                        default: neighborPos = Chunk.Pos.Add(-Env.CHUNK_SIZE, 0, 0); break;
                     }
                 }
 
@@ -555,7 +555,7 @@ namespace Voxelmetric.Code.Core.StateManager
                     if (neighborPos.y > Chunk.Pos.y)
                     {
                         int srcIndex = Helpers.GetChunkIndex1DFrom3D(-1, 0, -1);
-                        int dstIndex = Helpers.GetChunkIndex1DFrom3D(-1, Env.ChunkSize, -1);
+                        int dstIndex = Helpers.GetChunkIndex1DFrom3D(-1, Env.CHUNK_SIZE, -1);
                         Chunk.Blocks.Copy(neighborChunk.Blocks, srcIndex, dstIndex, sizeWithPaddingPow2);
                     }
                     // Copy the top layer of a neighbor chunk to the bottom layer of ours
@@ -574,7 +574,7 @@ namespace Voxelmetric.Code.Core.StateManager
                     if (neighborPos.z > Chunk.Pos.z)
                     {
                         int srcIndex = Helpers.GetChunkIndex1DFrom3D(-1, -1, 0);
-                        int dstIndex = Helpers.GetChunkIndex1DFrom3D(-1, -1, Env.ChunkSize);
+                        int dstIndex = Helpers.GetChunkIndex1DFrom3D(-1, -1, Env.CHUNK_SIZE);
                         for (int y = -1;
                              y < sizePlusPadding;
                              y++, srcIndex += chunkIterXY, dstIndex += chunkIterXY)
@@ -611,7 +611,7 @@ namespace Voxelmetric.Code.Core.StateManager
                     if (neighborPos.x > Chunk.Pos.x)
                     {
                         int srcIndex = Helpers.GetChunkIndex1DFrom3D(0, -1, -1);
-                        int dstIndex = Helpers.GetChunkIndex1DFrom3D(Env.ChunkSize, -1, -1);
+                        int dstIndex = Helpers.GetChunkIndex1DFrom3D(Env.CHUNK_SIZE, -1, -1);
                         for (int y = -1; y < sizePlusPadding; y++)
                         {
                             for (int z = -1;
@@ -823,17 +823,17 @@ namespace Voxelmetric.Code.Core.StateManager
 
             // Calculate how many listeners a chunk can have
             int maxListeners = 0;
-            if (world.CheckInsideWorld(chunk.Pos.Add(Env.ChunkSize, 0, 0)) && (chunk.Pos.x != world.Bounds.maxX))
+            if (world.CheckInsideWorld(chunk.Pos.Add(Env.CHUNK_SIZE, 0, 0)) && (chunk.Pos.x != world.Bounds.maxX))
                 ++maxListeners;
-            if (world.CheckInsideWorld(chunk.Pos.Add(-Env.ChunkSize, 0, 0)) && (chunk.Pos.x != world.Bounds.minX))
+            if (world.CheckInsideWorld(chunk.Pos.Add(-Env.CHUNK_SIZE, 0, 0)) && (chunk.Pos.x != world.Bounds.minX))
                 ++maxListeners;
-            if (world.CheckInsideWorld(chunk.Pos.Add(0, Env.ChunkSize, 0)) && (chunk.Pos.y != world.Bounds.maxY))
+            if (world.CheckInsideWorld(chunk.Pos.Add(0, Env.CHUNK_SIZE, 0)) && (chunk.Pos.y != world.Bounds.maxY))
                 ++maxListeners;
-            if (world.CheckInsideWorld(chunk.Pos.Add(0, -Env.ChunkSize, 0)) && (chunk.Pos.y != world.Bounds.minY))
+            if (world.CheckInsideWorld(chunk.Pos.Add(0, -Env.CHUNK_SIZE, 0)) && (chunk.Pos.y != world.Bounds.minY))
                 ++maxListeners;
-            if (world.CheckInsideWorld(chunk.Pos.Add(0, 0, Env.ChunkSize)) && (chunk.Pos.z != world.Bounds.maxZ))
+            if (world.CheckInsideWorld(chunk.Pos.Add(0, 0, Env.CHUNK_SIZE)) && (chunk.Pos.z != world.Bounds.maxZ))
                 ++maxListeners;
-            if (world.CheckInsideWorld(chunk.Pos.Add(0, 0, -Env.ChunkSize)) && (chunk.Pos.z != world.Bounds.minZ))
+            if (world.CheckInsideWorld(chunk.Pos.Add(0, 0, -Env.CHUNK_SIZE)) && (chunk.Pos.z != world.Bounds.minZ))
                 ++maxListeners;
 
             //int prevListeners = stateManager.ListenerCountMax;
@@ -856,12 +856,12 @@ namespace Voxelmetric.Code.Core.StateManager
         private void SubscribeNeighbors(bool subscribe)
         {
             Vector3Int pos = Chunk.Pos;
-            SubscribeTwoNeighbors(new Vector3Int(pos.x + Env.ChunkSize, pos.y, pos.z), subscribe);
-            SubscribeTwoNeighbors(new Vector3Int(pos.x - Env.ChunkSize, pos.y, pos.z), subscribe);
-            SubscribeTwoNeighbors(new Vector3Int(pos.x, pos.y + Env.ChunkSize, pos.z), subscribe);
-            SubscribeTwoNeighbors(new Vector3Int(pos.x, pos.y - Env.ChunkSize, pos.z), subscribe);
-            SubscribeTwoNeighbors(new Vector3Int(pos.x, pos.y, pos.z + Env.ChunkSize), subscribe);
-            SubscribeTwoNeighbors(new Vector3Int(pos.x, pos.y, pos.z - Env.ChunkSize), subscribe);
+            SubscribeTwoNeighbors(new Vector3Int(pos.x + Env.CHUNK_SIZE, pos.y, pos.z), subscribe);
+            SubscribeTwoNeighbors(new Vector3Int(pos.x - Env.CHUNK_SIZE, pos.y, pos.z), subscribe);
+            SubscribeTwoNeighbors(new Vector3Int(pos.x, pos.y + Env.CHUNK_SIZE, pos.z), subscribe);
+            SubscribeTwoNeighbors(new Vector3Int(pos.x, pos.y - Env.CHUNK_SIZE, pos.z), subscribe);
+            SubscribeTwoNeighbors(new Vector3Int(pos.x, pos.y, pos.z + Env.CHUNK_SIZE), subscribe);
+            SubscribeTwoNeighbors(new Vector3Int(pos.x, pos.y, pos.z - Env.CHUNK_SIZE), subscribe);
 
             // Update required listener count
             UpdateListenersCount(this);

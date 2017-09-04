@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.2.0b9</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -214,15 +212,10 @@
       <HintPath>Library\UnityAssemblies\UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets\External\JsonNet\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="VoxeLibrary">
-      <HintPath>Assets\Lib\VoxeLibrary.dll</HintPath>
+      <HintPath>Assets\Voxelmetric\External\JsonNet\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\External\FastNoise.cs" />
-    <Compile Include="Assets\External\LibLZF.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Builders\AMeshBuilder.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Builders\Collider\CubeMeshColliderBuilder.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Builders\Geometry\CubeMeshBuilder.cs" />
@@ -379,6 +372,8 @@
     <Compile Include="Assets\Voxelmetric\Examples\Utils\DiagHUD.cs" />
     <Compile Include="Assets\Voxelmetric\Examples\VoxelmetricBenchmarks.cs" />
     <Compile Include="Assets\Voxelmetric\Examples\VoxelmetricExample.cs" />
+    <Compile Include="Assets\Voxelmetric\External\FastNoise.cs" />
+    <Compile Include="Assets\Voxelmetric\External\LibLZF.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Voxelmetric\Resources\Shaders\Vertex Colored Diffuse.shader" />

@@ -22,8 +22,8 @@ namespace Voxelmetric.Code.Core.Operations
         protected override void OnSetBlocks(ChunkBlocks blocks)
         {
             int index = Helpers.GetChunkIndex1DFrom3D(m_Min.x, m_Min.y, m_Min.z);
-            int yOffset = Env.ChunkSizeWithPaddingPow2-(m_Max.z-m_Min.z+1) * Env.ChunkSizeWithPadding;
-            int zOffset = Env.ChunkSizeWithPadding-(m_Max.x-m_Min.x+1);
+            int yOffset = Env.CHUNK_SIZE_WITH_PADDING_POW_2-(m_Max.z-m_Min.z+1) * Env.CHUNK_SIZE_WITH_PADDING;
+            int zOffset = Env.CHUNK_SIZE_WITH_PADDING-(m_Max.x-m_Min.x+1);
 
             for (int y = m_Min.y; y<=m_Max.y; ++y, index+=yOffset)
             {
@@ -40,8 +40,8 @@ namespace Voxelmetric.Code.Core.Operations
         protected override void OnSetBlocksRaw(ChunkBlocks blocks, ref Vector3Int from, ref Vector3Int to)
         {
             int index = Helpers.GetChunkIndex1DFrom3D(from.x, from.y, from.z);
-            int yOffset = Env.ChunkSizeWithPaddingPow2-(to.z-from.z+1) * Env.ChunkSizeWithPadding;
-            int zOffset = Env.ChunkSizeWithPadding-(to.x-from.x+1);
+            int yOffset = Env.CHUNK_SIZE_WITH_PADDING_POW_2-(to.z-from.z+1) * Env.CHUNK_SIZE_WITH_PADDING;
+            int zOffset = Env.CHUNK_SIZE_WITH_PADDING-(to.x-from.x+1);
 
             for (int y = from.y; y <= to.y; ++y, index+=yOffset)
             {

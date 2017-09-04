@@ -48,9 +48,9 @@ public class StructureLayer : TerrainLayer
         //if (chunk.pos.x!=-30 || chunk.pos.y!=30 || chunk.pos.z!=0) return;
 
         int minX = chunk.Pos.x;
-        int maxX = chunk.Pos.x + Env.ChunkSize1;
+        int maxX = chunk.Pos.x + Env.CHUNK_SIZE_1;
         int minZ = chunk.Pos.z;
-        int maxZ = chunk.Pos.z + Env.ChunkSize1;
+        int maxZ = chunk.Pos.z + Env.CHUNK_SIZE_1;
 
         int structureID = 0;
 
@@ -68,8 +68,8 @@ public class StructureLayer : TerrainLayer
                         Randomization.RandomPrecise(pos.Add(0, 0, 1).GetHashCode(), 44) > chanceAtPos &&
                         Randomization.RandomPrecise(pos.Add(0, 0, -1).GetHashCode(), 44) > chanceAtPos)
                     {
-                        int xx = Helpers.Mod(x, Env.ChunkSize);
-                        int zz = Helpers.Mod(z, Env.ChunkSize);
+                        int xx = Helpers.Mod(x, Env.CHUNK_SIZE);
+                        int zz = Helpers.Mod(z, Env.CHUNK_SIZE);
                         int height = Helpers.FastFloor(m_TerrainGen.GetTerrainHeightForChunk(chunk, xx, zz));
 
                         Vector3Int worldPos = new Vector3Int(x, height, z);

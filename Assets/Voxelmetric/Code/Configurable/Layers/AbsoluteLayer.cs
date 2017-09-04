@@ -33,7 +33,7 @@ public class AbsoluteLayer : TerrainLayer
     public override void PreProcess(Chunk chunk, int layerIndex)
     {
         NoiseItem ni = chunk.Pools.NoiseItems[layerIndex];
-        ni.noiseGen.SetInterpBitStep(Env.ChunkSizeWithPadding, 2);
+        ni.noiseGen.SetInterpBitStep(Env.CHUNK_SIZE_WITH_PADDING, 2);
         ni.lookupTable = chunk.Pools.floatArrayPool.Pop(ni.noiseGen.Size * ni.noiseGen.Size);
 
 #if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN) && ENABLE_FASTSIMD

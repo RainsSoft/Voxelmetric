@@ -101,7 +101,7 @@ public abstract class TerrainLayer : IComparable, IEquatable<TerrainLayer>
     {
         int chunkY = chunk.Pos.y;
 
-        int yMax = chunkY + Env.ChunkSize;
+        int yMax = chunkY + Env.CHUNK_SIZE;
         if (startPlaceHeight >= yMax || endPlaceHeight < chunkY)
             return;
 

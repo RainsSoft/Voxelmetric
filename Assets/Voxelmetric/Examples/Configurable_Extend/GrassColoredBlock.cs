@@ -32,11 +32,11 @@ public class GrassColoredBlock : ColoredBlock
 
         // Let's stay inside bounds
         int minX = localPos.x <= 0 ? 0 : 1;
-        int maxX = localPos.x >= Env.ChunkSize1 ? 0 : 1;
+        int maxX = localPos.x >= Env.CHUNK_SIZE_1 ? 0 : 1;
         int minY = localPos.y <= 0 ? 0 : 1;
-        int maxY = localPos.y >= Env.ChunkSize1 ? 0 : 1;
+        int maxY = localPos.y >= Env.CHUNK_SIZE_1 ? 0 : 1;
         int minZ = localPos.z <= 0 ? 0 : 1;
-        int maxZ = localPos.z >= Env.ChunkSize1 ? 0 : 1;
+        int maxZ = localPos.z >= Env.CHUNK_SIZE_1 ? 0 : 1;
 
         for (int y = -minY; y <= maxY; y++)
         {
@@ -50,7 +50,7 @@ public class GrassColoredBlock : ColoredBlock
                         continue;
 
                     // There has to be air above the dirt
-                    int airIndex = grassIndex + Env.ChunkSizePow2;
+                    int airIndex = grassIndex + Env.CHUNK_SIZE_POW_2;
                     if (blocks.Get(airIndex).Equals(air))
                         blocks.Modify(new ModifyOpBlock(grass, grassIndex, true));
                 }

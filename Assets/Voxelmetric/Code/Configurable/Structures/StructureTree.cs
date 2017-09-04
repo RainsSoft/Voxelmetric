@@ -106,18 +106,18 @@ public class StructureTree : GeneratedStructure
         Vector3Int chunkPosFrom = Chunk.ContainingChunkPos(ref posFrom);
         Vector3Int chunkPosTo = Chunk.ContainingChunkPos(ref posTo);
 
-        minY = Helpers.Mod(posFrom.y, Env.ChunkSize);
-        for (cy = chunkPosFrom.y; cy <= chunkPosTo.y; cy += Env.ChunkSize, minY = 0)
+        minY = Helpers.Mod(posFrom.y, Env.CHUNK_SIZE);
+        for (cy = chunkPosFrom.y; cy <= chunkPosTo.y; cy += Env.CHUNK_SIZE, minY = 0)
         {
-            maxY = Math.Min(posTo.y - cy, Env.ChunkSize1);
-            minZ = Helpers.Mod(posFrom.z, Env.ChunkSize);
-            for (cz = chunkPosFrom.z; cz <= chunkPosTo.z; cz += Env.ChunkSize, minZ = 0)
+            maxY = Math.Min(posTo.y - cy, Env.CHUNK_SIZE_1);
+            minZ = Helpers.Mod(posFrom.z, Env.CHUNK_SIZE);
+            for (cz = chunkPosFrom.z; cz <= chunkPosTo.z; cz += Env.CHUNK_SIZE, minZ = 0)
             {
-                maxZ = Math.Min(posTo.z - cz, Env.ChunkSize1);
-                minX = Helpers.Mod(posFrom.x, Env.ChunkSize);
-                for (cx = chunkPosFrom.x; cx <= chunkPosTo.x; cx += Env.ChunkSize, minX = 0)
+                maxZ = Math.Min(posTo.z - cz, Env.CHUNK_SIZE_1);
+                minX = Helpers.Mod(posFrom.x, Env.CHUNK_SIZE);
+                for (cx = chunkPosFrom.x; cx <= chunkPosTo.x; cx += Env.CHUNK_SIZE, minX = 0)
                 {
-                    maxX = Math.Min(posTo.x - cx, Env.ChunkSize1);
+                    maxX = Math.Min(posTo.x - cx, Env.CHUNK_SIZE_1);
 
                     int xOff = cx - worldPos.x;
                     int yOff = cy - y1 - leavesRange1;
@@ -141,8 +141,8 @@ public class StructureTree : GeneratedStructure
                     // Actual crown construction
                     ChunkBlocks blocks = chunk.Blocks;
                     int index = Helpers.GetChunkIndex1DFrom3D(minX, minY, minZ);
-                    int yOffset = Env.ChunkSizeWithPaddingPow2 - (maxZ - minZ + 1) * Env.ChunkSizeWithPadding;
-                    int zOffset = Env.ChunkSizeWithPadding - (maxX - minX + 1);
+                    int yOffset = Env.CHUNK_SIZE_WITH_PADDING_POW_2 - (maxZ - minZ + 1) * Env.CHUNK_SIZE_WITH_PADDING;
+                    int zOffset = Env.CHUNK_SIZE_WITH_PADDING - (maxX - minX + 1);
                     for (int y = minY; y <= maxY; ++y, index += yOffset)
                     {
                         for (int z = minZ; z <= maxZ; ++z, index += zOffset)
@@ -174,13 +174,13 @@ public class StructureTree : GeneratedStructure
         cx = Helpers.MakeChunkCoordinate(worldPos.x);
         cz = Helpers.MakeChunkCoordinate(worldPos.z);
 
-        int tx = Helpers.Mod(worldPos.x, Env.ChunkSize);
-        int tz = Helpers.Mod(worldPos.z, Env.ChunkSize);
+        int tx = Helpers.Mod(worldPos.x, Env.CHUNK_SIZE);
+        int tz = Helpers.Mod(worldPos.z, Env.CHUNK_SIZE);
 
-        minY = Helpers.Mod(posFrom.y, Env.ChunkSize);
-        for (cy = chunkPosFrom.y; cy <= chunkPosTo.y; cy += Env.ChunkSize, minY = 0)
+        minY = Helpers.Mod(posFrom.y, Env.CHUNK_SIZE);
+        for (cy = chunkPosFrom.y; cy <= chunkPosTo.y; cy += Env.CHUNK_SIZE, minY = 0)
         {
-            maxY = Math.Min(posTo.y - cy, Env.ChunkSize1);
+            maxY = Math.Min(posTo.y - cy, Env.CHUNK_SIZE_1);
 
             if (cx != chunk.Pos.x || cy != chunk.Pos.y || cz != chunk.Pos.z)
             {
@@ -200,7 +200,7 @@ public class StructureTree : GeneratedStructure
             // Actual trunk construction
             ChunkBlocks blocks = chunk.Blocks;
             int index = Helpers.GetChunkIndex1DFrom3D(tx, minY, tz);
-            for (int y = minY; y <= maxY; ++y, index += Env.ChunkSizeWithPaddingPow2)
+            for (int y = minY; y <= maxY; ++y, index += Env.CHUNK_SIZE_WITH_PADDING_POW_2)
                 blocks.SetRaw(index, log);
         }
     }

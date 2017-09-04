@@ -172,14 +172,14 @@ namespace Voxelmetric.Code.Core.Clipmap
 
                 // Pick the greater distance and choose a proper LOD
                 int dist = Helpers.Abs(distance);
-                lod = (int)(dist / (coefLOD * Env.ChunkPow));
+                lod = (int)(dist / (coefLOD * Env.CHUNK_POW));
             }
 
             // LOD can't be bigger than chunk size
             if (lod < 0)
                 lod = 0;
-            if (lod > Env.ChunkPow)
-                lod = Env.ChunkPow;
+            if (lod > Env.CHUNK_POW)
+                lod = Env.CHUNK_POW;
 
             return lod;
         }

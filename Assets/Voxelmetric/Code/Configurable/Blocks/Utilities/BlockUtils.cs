@@ -17,7 +17,7 @@ namespace Voxelmetric.Code.Configurable.Blocks.Utilities
 
         //Adding a tiny overlap between block meshes may solve floating point imprecision
         //errors causing pixel size gaps between blocks when looking closely
-        public static readonly float blockPadding = Env.BlockFacePadding;
+        public static readonly float blockPadding = Env.BLOCK_FACE_PADDING;
 
         public static readonly Vector3[][] PaddingOffsets =
         {
@@ -95,7 +95,7 @@ namespace Voxelmetric.Code.Configurable.Blocks.Utilities
             ChunkBlocks blocks = chunk.Blocks;
             int index, index2, index3;
 
-            int sizeWithPadding = chunk.SideSize + Env.ChunkPadding2;
+            int sizeWithPadding = chunk.SideSize + Env.CHUNK_PADDING_2;
             int sizeWithPaddingPow2 = sizeWithPadding * sizeWithPadding;
 
             switch (direction)

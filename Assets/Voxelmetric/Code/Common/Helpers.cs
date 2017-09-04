@@ -18,21 +18,21 @@ namespace Voxelmetric.Code.Common
             return x + sizeX * (z + y * sizeZ);
         }
 
-        public static readonly int ZeroChunkIndex = Env.ChunkPadding + (Env.ChunkPadding << Env.ChunkPow) + (Env.ChunkPadding << Env.ChunkPow2);
+        public static readonly int ZeroChunkIndex = Env.CHUNK_PADDING + (Env.CHUNK_PADDING << Env.CHUNK_POW) + (Env.CHUNK_PADDING << Env.CHUNK_POW_2);
 
         public static int GetChunkIndex1DFrom3D(int x, int y, int z)
         {
-            int xx = x + Env.ChunkPadding;
-            int yy = y + Env.ChunkPadding;
-            int zz = z + Env.ChunkPadding;
-            return xx + (zz << Env.ChunkPow) + (yy << Env.ChunkPow2);
+            int xx = x + Env.CHUNK_PADDING;
+            int yy = y + Env.CHUNK_PADDING;
+            int zz = z + Env.CHUNK_PADDING;
+            return xx + (zz << Env.CHUNK_POW) + (yy << Env.CHUNK_POW_2);
         }
 
         public static int GetChunkIndex1DFrom3D(int x, int y, int z, int pow)
         {
-            int xx = x + Env.ChunkPadding;
-            int yy = y + Env.ChunkPadding;
-            int zz = z + Env.ChunkPadding;
+            int xx = x + Env.CHUNK_PADDING;
+            int yy = y + Env.CHUNK_PADDING;
+            int zz = z + Env.CHUNK_PADDING;
             return xx + (zz << pow) + (yy << (pow << 1));
         }
 
@@ -51,30 +51,30 @@ namespace Voxelmetric.Code.Common
 
         public static void GetChunkIndex3DFrom1D(int index, out int x, out int y, out int z)
         {
-            x = index & Env.ChunkMask;
-            y = index >> Env.ChunkPow2;
-            z = (index >> Env.ChunkPow) & Env.ChunkMask;
+            x = index & Env.CHUNK_MASK;
+            y = index >> Env.CHUNK_POW_2;
+            z = (index >> Env.CHUNK_POW) & Env.CHUNK_MASK;
 
-            x -= Env.ChunkPadding;
-            y -= Env.ChunkPadding;
-            z -= Env.ChunkPadding;
+            x -= Env.CHUNK_PADDING;
+            y -= Env.CHUNK_PADDING;
+            z -= Env.CHUNK_PADDING;
         }
 
         public static void GetChunkIndex3DFrom1D(int index, out int x, out int y, out int z, int pow)
         {
-            x = index & Env.ChunkMask;
+            x = index & Env.CHUNK_MASK;
             y = index >> (pow << 1);
             z = (index >> pow) & ((1 << pow) - 1);
 
-            x -= Env.ChunkPadding;
-            y -= Env.ChunkPadding;
-            z -= Env.ChunkPadding;
+            x -= Env.CHUNK_PADDING;
+            y -= Env.CHUNK_PADDING;
+            z -= Env.CHUNK_PADDING;
         }
 
         // Returns a coordinate at the beggining of the chunk
         public static int MakeChunkCoordinate(int x)
         {
-            return ((x >= 0 ? x : x - Env.ChunkSize1) / Env.ChunkSize) * Env.ChunkSize;
+            return ((x >= 0 ? x : x - Env.CHUNK_SIZE_1) / Env.CHUNK_SIZE) * Env.CHUNK_SIZE;
         }
 
         public static int MakeChunkCoordinate(int x, int size)

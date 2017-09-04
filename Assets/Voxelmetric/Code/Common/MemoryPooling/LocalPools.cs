@@ -28,7 +28,7 @@ namespace Voxelmetric.Code.Common.MemoryPooling
 
         public readonly ArrayPoolCollection<BlockFace> blockFaceArrayPool = new ArrayPoolCollection<BlockFace>(128);
 
-        public readonly MarshalMemPool marshaledPool = new MarshalMemPool(Env.ChunkSizeWithPaddingPow3 * 8); // Set to a multiple of chunk volume
+        public readonly MarshalMemPool marshaledPool = new MarshalMemPool(Env.CHUNK_SIZE_WITH_PADDING_POW_3 * 8); // Set to a multiple of chunk volume
 
         public override string ToString()
         {

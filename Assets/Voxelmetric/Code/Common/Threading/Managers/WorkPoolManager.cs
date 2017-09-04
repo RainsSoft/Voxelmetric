@@ -1,13 +1,10 @@
 using System.Collections.Generic;
-using Voxelmetric.Code.Utilities;
 
 namespace Voxelmetric.Code.Common.Threading.Managers
 {
     public static class WorkPoolManager
     {
         private static readonly List<IAThreadPoolItem> workItems = new List<IAThreadPoolItem>(2048);
-
-        private static readonly TimeBudgetHandler timeBudget = Features.UseThreadPool ? null : new TimeBudgetHandler(10);
 
         public static void Add(IAThreadPoolItem action)
         {
@@ -20,7 +17,7 @@ namespace Voxelmetric.Code.Common.Threading.Managers
                 return;
 
             // Commit all the work we have
-            if (Features.UseThreadPool)
+            if (Features.USE_THREAD_POOL)
             {
                 ThreadPool pool = Globals.WorkPool;
 
@@ -95,7 +92,7 @@ namespace Voxelmetric.Code.Common.Threading.Managers
 
         public new static string ToString()
         {
-            return Features.UseThreadPool ? Globals.WorkPool.ToString() : workItems.Count.ToString();
+            return Globals.WorkPool.ToString();
         }
     }
 }

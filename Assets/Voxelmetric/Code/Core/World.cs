@@ -59,13 +59,13 @@ namespace Voxelmetric.Code.Core
             int offsetX = (Bounds.maxX + Bounds.minX) >> 1;
             int offsetZ = (Bounds.maxZ + Bounds.minZ) >> 1;
 
-            int xx = (pos.x - offsetX) / Env.ChunkSize;
-            int zz = (pos.z - offsetZ) / Env.ChunkSize;
-            int yy = pos.y / Env.ChunkSize;
-            int horizontalRadius = (Bounds.maxX - Bounds.minX) / (2 * Env.ChunkSize);
+            int xx = (pos.x - offsetX) / Env.CHUNK_SIZE;
+            int zz = (pos.z - offsetZ) / Env.CHUNK_SIZE;
+            int yy = pos.y / Env.CHUNK_SIZE;
+            int horizontalRadius = (Bounds.maxX - Bounds.minX) / (2 * Env.CHUNK_SIZE);
 
             return xx * xx + zz * zz <= horizontalRadius * horizontalRadius &&
-                   yy >= (Bounds.minY / Env.ChunkSize) && yy <= (Bounds.maxY / Env.ChunkSize);
+                   yy >= (Bounds.minY / Env.CHUNK_SIZE) && yy <= (Bounds.maxY / Env.CHUNK_SIZE);
         }
 
         void Awake()
@@ -114,8 +114,8 @@ namespace Voxelmetric.Code.Core
             if (m_Config.minX != m_Config.maxX)
             {
                 // Make sure there is at least one chunk worth of space in the world on the X axis
-                if (m_Config.maxX - m_Config.minX < Env.ChunkSize)
-                    m_Config.maxX = m_Config.minX + Env.ChunkSize;
+                if (m_Config.maxX - m_Config.minX < Env.CHUNK_SIZE)
+                    m_Config.maxX = m_Config.minX + Env.CHUNK_SIZE;
             }
 
             // minY can't be greater then maxY
@@ -129,8 +129,8 @@ namespace Voxelmetric.Code.Core
             if (m_Config.minY != m_Config.maxY)
             {
                 // Make sure there is at least one chunk worth of space in the world on the Y axis
-                if (m_Config.maxY - m_Config.minY < Env.ChunkSize)
-                    m_Config.maxY = m_Config.minY + Env.ChunkSize;
+                if (m_Config.maxY - m_Config.minY < Env.CHUNK_SIZE)
+                    m_Config.maxY = m_Config.minY + Env.CHUNK_SIZE;
             }
 
             // minZ can't be greater then maxZ
@@ -144,8 +144,8 @@ namespace Voxelmetric.Code.Core
             if (m_Config.minZ != m_Config.maxZ)
             {
                 // Make sure there is at least one chunk worth of space in the world on the Z axis
-                if (m_Config.maxZ - m_Config.minZ < Env.ChunkSize)
-                    m_Config.maxZ = m_Config.minZ + Env.ChunkSize;
+                if (m_Config.maxZ - m_Config.minZ < Env.CHUNK_SIZE)
+                    m_Config.maxZ = m_Config.minZ + Env.CHUNK_SIZE;
             }
         }
 
@@ -276,11 +276,11 @@ namespace Voxelmetric.Code.Core
                     }
 
                     // Structure removed. We need to remove any associated world positions now
-                    for (int y = info.bounds.minY; y < info.bounds.maxY; y += Env.ChunkSize)
+                    for (int y = info.bounds.minY; y < info.bounds.maxY; y += Env.CHUNK_SIZE)
                     {
-                        for (int z = info.bounds.minZ; z < info.bounds.maxZ; z += Env.ChunkSize)
+                        for (int z = info.bounds.minZ; z < info.bounds.maxZ; z += Env.CHUNK_SIZE)
                         {
-                            for (int x = info.bounds.minX; x < info.bounds.maxX; x += Env.ChunkSize)
+                            for (int x = info.bounds.minX; x < info.bounds.maxX; x += Env.CHUNK_SIZE)
                             {
                                 List<StructureContext> list;
                                 if (!pendingStructures.TryGetValue(new Vector3Int(x, y, z), out list) || list.Count <= 0)

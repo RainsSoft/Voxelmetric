@@ -11,7 +11,7 @@ namespace Voxelmetric.Code.Core
     public sealed class Chunk
     {
         //! ID used by memory pools to map the chunk to a given thread. Must be accessed from the main thread
-        private static int s_id = 0;
+        private static int id = 0;
 
         public World World { get; private set; }
         public ChunkStateManagerClient StateManager { get; set; }
@@ -37,26 +37,26 @@ namespace Voxelmetric.Code.Core
         public int ThreadID { get; private set; }
 
         //! Says whether the chunk needs its collider rebuilt
-        private bool m_needsCollider;
+        private bool m_NeedsCollider;
         public bool NeedsCollider
         {
             get
             {
-                return m_needsCollider;
+                return m_NeedsCollider;
             }
             set
             {
-                bool prevNeedCollider = m_needsCollider;
-                m_needsCollider = value;
-                if (m_needsCollider && !prevNeedCollider)
+                bool prevNeedCollider = m_NeedsCollider;
+                m_NeedsCollider = value;
+                if (m_NeedsCollider && !prevNeedCollider)
                     Blocks.RequestCollider();
             }
         }
 
-        private int m_sideSize = 0;
+        private int m_SideSize = 0;
         public int SideSize
         {
-            get { return m_sideSize; }
+            get { return m_SideSize; }
         }
 
         public static Chunk CreateChunk(World world, Vector3Int pos)
@@ -89,13 +89,13 @@ namespace Voxelmetric.Code.Core
             Globals.MemPools.chunkPool.Push(chunk);
         }
 
-        public Chunk(int sideSize = Env.ChunkSize)
+        public Chunk(int sideSize = Env.CHUNK_SIZE)
         {
-            m_sideSize = sideSize;
+            m_SideSize = sideSize;
 
             // Associate Chunk with a certain thread and make use of its memory pool
             // This is necessary in order to have lock-free caches
-            ThreadID = Globals.WorkPool.GetThreadIDFromIndex(s_id++);
+            ThreadID = Globals.WorkPool.GetThreadIDFromIndex(id++);
             Pools = Globals.WorkPool.GetPool(ThreadID);
 
             StateManager = new ChunkStateManagerClient(this);
@@ -117,7 +117,7 @@ namespace Voxelmetric.Code.Core
 
             WorldBounds = new AABB(
                 pos.x, pos.y, pos.z,
-                pos.x + m_sideSize, pos.y + m_sideSize, pos.z + m_sideSize
+                pos.x + m_SideSize, pos.y + m_SideSize, pos.z + m_SideSize
                 );
 
             Reset();
@@ -139,7 +139,7 @@ namespace Voxelmetric.Code.Core
             GeometryHandler.Reset();
             ChunkColliderGeometryHandler.Reset();
 
-            m_needsCollider = false;
+            m_NeedsCollider = false;
         }
 
         public bool CanUpdate
