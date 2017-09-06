@@ -2,6 +2,7 @@ using System.Collections;
 
 namespace Voxelmetric.Code.Load_Resources
 {
+    [System.Obsolete("Use 'Dev_LayerConfig' instead.")]
     public struct LayerConfig
     {
         private string m_Name;

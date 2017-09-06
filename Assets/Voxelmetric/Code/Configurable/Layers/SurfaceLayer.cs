@@ -2,6 +2,7 @@ using Voxelmetric.Code.Core;
 using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Load_Resources;
 
+[System.Obsolete("Use 'Dev_SurfaceLayer' instead.")]
 public class SurfaceLayer : TerrainLayer
 {
     // Right now this acts just like additive layer but always set to one block thickness

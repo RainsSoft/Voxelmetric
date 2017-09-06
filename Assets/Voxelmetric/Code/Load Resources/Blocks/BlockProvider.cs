@@ -193,6 +193,11 @@ namespace Voxelmetric.Code.Load_Resources.Blocks
             return BlockTypes[AIR_TYPE];
         }
 
+        public Dev_Block Dev_GetBlock(string name)
+        {
+            return null;
+        }
+
         public BlockConfig GetConfig(ushort type)
         {
             if (type < m_Configs.Length)

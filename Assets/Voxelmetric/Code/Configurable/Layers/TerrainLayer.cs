@@ -7,6 +7,7 @@ using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Load_Resources;
 using Voxelmetric.Code.Utilities.Noise;
 
+[Obsolete("Use 'Dev_TerrainLayer' instead.")]
 public abstract class TerrainLayer : IComparable, IEquatable<TerrainLayer>
 {
     protected World m_World;

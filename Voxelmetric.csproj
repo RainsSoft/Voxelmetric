@@ -298,6 +298,12 @@
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Utilities\BlockUtils.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\AbsoluteLayer.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\AdditiveLayer.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\Dev_AbsoluteLayer.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\Dev_AdditiveLayer.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\Dev_RandomLayer.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\Dev_StructureLayer.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\Dev_SurfaceLayer.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\Dev_TerrainLayer.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\RandomLayer.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\StructureLayer.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\SurfaceLayer.cs" />

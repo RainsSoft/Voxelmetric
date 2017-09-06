@@ -5,6 +5,7 @@ using Voxelmetric.Code.Core;
 using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Load_Resources;
 
+[System.Obsolete("Use 'Dev_RandomLayer' instead.")]
 public class RandomLayer : TerrainLayer
 {
     private BlockData m_BlockToPlace;

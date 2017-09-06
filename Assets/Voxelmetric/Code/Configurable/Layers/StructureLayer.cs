@@ -8,6 +8,7 @@ using Voxelmetric.Code.Common.Math;
 using Voxelmetric.Code.Core;
 using Voxelmetric.Code.Load_Resources;
 
+[System.Obsolete("Use 'Dev_StructureLayer' instead.")]
 public class StructureLayer : TerrainLayer
 {
     protected GeneratedStructure m_Structure;

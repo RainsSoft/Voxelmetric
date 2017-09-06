@@ -5,6 +5,7 @@ using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Load_Resources;
 using Voxelmetric.Code.Utilities.Noise;
 
+[System.Obsolete("Use 'Dev_AdditiveLayer' instead.")]
 public class AdditiveLayer : TerrainLayer
 {
     private BlockData m_BlockToPlace;

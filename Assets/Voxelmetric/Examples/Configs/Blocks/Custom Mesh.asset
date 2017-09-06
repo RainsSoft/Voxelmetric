@@ -13,25 +13,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BlockName: Pyramid
   m_Type: 1
+  m_AutoAssignType: 1
+  m_BlockType: 0
   m_Solid: 1
   m_Transparent: 0
   m_RaycastHit: 0
   m_RaycastHitOnRemoval: 0
   m_RenderMaterialID: 0
   m_PhysicMaterialID: 0
-  m_BaseTexture: {fileID: 0}
-  m_BaseColor: {r: 1, g: 1, b: 1, a: 1}
   m_Textures:
     m_Top: {fileID: 0}
-    m_TopColor: {r: 1, g: 1, b: 1, a: 1}
     m_Bottom: {fileID: 0}
-    m_BottomColor: {r: 1, g: 1, b: 1, a: 1}
     m_North: {fileID: 0}
-    m_NorthColor: {r: 1, g: 1, b: 1, a: 1}
     m_Back: {fileID: 0}
-    m_BackColor: {r: 1, g: 1, b: 1, a: 1}
     m_East: {fileID: 0}
-    m_EastColor: {r: 1, g: 1, b: 1, a: 1}
     m_West: {fileID: 0}
+  m_Colors:
+    m_TopColor: {r: 1, g: 1, b: 1, a: 1}
+    m_BottomColor: {r: 1, g: 1, b: 1, a: 1}
+    m_NorthColor: {r: 1, g: 1, b: 1, a: 1}
+    m_BackColor: {r: 1, g: 1, b: 1, a: 1}
+    m_EastColor: {r: 1, g: 1, b: 1, a: 1}
     m_WestColor: {r: 1, g: 1, b: 1, a: 1}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: e4000b5530f97ed4b802340ffe324a75, type: 2}
+  m_Mesh: {fileID: 0}
+  m_MeshOffset: {x: 0, y: 0, z: 0}
+  m_MeshTexture: {fileID: 0}
