@@ -5,6 +5,7 @@ using Voxelmetric.Code.Data_types;
 
 namespace Voxelmetric.Code.Configurable
 {
+    [System.Serializable]
     public class Dev_RandomLayer : Dev_TerrainLayer
     {
         [SerializeField]

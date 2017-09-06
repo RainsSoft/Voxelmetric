@@ -4,6 +4,7 @@ using Voxelmetric.Code.Core;
 namespace Voxelmetric.Code.Configurable
 {
     //TODO: Implement Structure Layer
+    [System.Serializable]
     public class Dev_StructureLayer : Dev_TerrainLayer
     {
         [SerializeField]

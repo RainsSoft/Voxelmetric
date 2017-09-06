@@ -4,6 +4,7 @@ using Voxelmetric.Code.Data_types;
 
 namespace Voxelmetric.Code.Configurable
 {
+    [System.Serializable]
     public class Dev_SurfaceLayer : Dev_TerrainLayer
     {
         [SerializeField]
