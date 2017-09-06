@@ -7,6 +7,7 @@ using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Geometry;
 using Voxelmetric.Code.Geometry.GeometryBatcher;
 
+[System.Obsolete("Not implemented right now.")]
 public class MagicaMeshBlock : Block
 {
     public MagicaMeshBlockConfig MagicMeshConfig { get { return (MagicaMeshBlockConfig)m_Config; } }

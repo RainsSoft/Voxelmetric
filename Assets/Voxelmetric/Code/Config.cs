@@ -13,7 +13,6 @@ namespace Voxelmetric.Code
 
         #region DO NOT CHANGE THESE!
 
-        //TODO: Format names
         public const float BLOCK_SIZE_HALF = BLOCK_SIZE / 2f;
         public const float BLOCK_SIZE_INV = 1f / BLOCK_SIZE;
         public static readonly Vector3 halfBlockOffset = new Vector3(BLOCK_SIZE_HALF, BLOCK_SIZE_HALF, BLOCK_SIZE_HALF);

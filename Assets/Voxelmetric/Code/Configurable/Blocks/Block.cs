@@ -3,6 +3,7 @@ using Voxelmetric.Code.Configurable.Blocks;
 using Voxelmetric.Code.Core;
 using Voxelmetric.Code.Load_Resources.Blocks;
 
+[System.Obsolete("Use 'Dev_Block' instead.")]
 public class Block
 {
     protected BlockConfig m_Config;

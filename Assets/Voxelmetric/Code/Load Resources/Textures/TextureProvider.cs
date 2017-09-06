@@ -9,7 +9,10 @@ namespace Voxelmetric.Code.Load_Resources.Textures
         private TextureConfig[] m_Configs;
 
         //! Texture atlas
+        [System.Obsolete("Use 'm_Textures' instead.")]
         public readonly Dictionary<string, TextureCollection> textures;
+        private Dictionary<Texture2D, TextureCollection> m_Textures;
+        public Dictionary<Texture2D, TextureCollection> Textures { get { return m_Textures; } set { m_Textures = value; } }
         //! Texture atlas
         private Texture2D m_Atlas;
         public Texture2D Atlas { get { return m_Atlas; } set { m_Atlas = value; } }
@@ -194,6 +197,7 @@ namespace Voxelmetric.Code.Load_Resources.Textures
             return newTexture;
         }
 
+        [System.Obsolete("Use the one with Texture2D instead.")]
         public TextureCollection GetTextureCollection(string textureName)
         {
             if (textures.Keys.Count == 0)
@@ -204,5 +208,14 @@ namespace Voxelmetric.Code.Load_Resources.Textures
             return collection;
         }
 
+        public TextureCollection GetTextureCollection(Texture2D texture)
+        {
+            if (m_Textures.Keys.Count == 0)
+                LoadTextureIndex();
+
+            TextureCollection collection;
+            m_Textures.TryGetValue(texture, out collection);
+            return collection;
+        }
     }
 }

@@ -2555,7 +2555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_WorldConfig: colored
-  m_WorldName: world
+  m_WorldName: that super world
   m_Networking:
     isServer: 1
     allowConnections: 0

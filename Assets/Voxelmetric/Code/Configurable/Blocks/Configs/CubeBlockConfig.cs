@@ -3,6 +3,7 @@ using System.Collections;
 using Voxelmetric.Code.Core;
 using Voxelmetric.Code.Load_Resources.Textures;
 
+[System.Obsolete("Use 'Dev_CubeBlockConfig' instead.")]
 public class CubeBlockConfig : BlockConfig
 {
     private TextureCollection[] m_Textures;

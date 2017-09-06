@@ -6,6 +6,7 @@ using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Geometry;
 using Voxelmetric.Code.Load_Resources.Textures;
 
+[System.Obsolete("Use 'Dev_ConnectedMeshBlockConfig' instead.")]
 public class ConnectedMeshBlockConfig : CustomMeshBlockConfig
 {
     public readonly int[][] directionalTris = new int[6][];

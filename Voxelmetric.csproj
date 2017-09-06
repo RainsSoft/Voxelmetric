@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
-    <UnityVersion>2017.2.0b9</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <UnityVersion>2017.2.0b10</UnityVersion>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -211,6 +213,15 @@
     <Reference Include="UnityEngine.SpatialTracking">
       <HintPath>Library\UnityAssemblies\UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Purchasing">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Purchasing.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets\Voxelmetric\External\JsonNet\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -267,11 +278,22 @@
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\CrossMeshBlockConfig.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\CubeBlockConfig.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\CustomMeshBlockConfig.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\Dev_ColoredBlockConfig.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\Dev_ConnectedMeshBlockConfig.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\Dev_CrossMeshBlockConfig.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\Dev_CubeBlockConfig.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\Dev_CustomMeshBlockConfig.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\MagicaMeshBlockConfig.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\ConnectedMeshBlock.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\CrossMeshBlock.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\CubeBlock.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\CustomMeshBlock.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Dev_Block.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Dev_ColoredBlock.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Dev_ConnectedMeshBlock.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Dev_CrossMeshBlock.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Dev_CubeBlock.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Dev_CustomMeshBlock.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\MagicaMeshBlock.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Utilities\BlockUtils.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Configurable\Layers\AbsoluteLayer.cs" />
@@ -294,6 +316,9 @@
     <Compile Include="Assets\Voxelmetric\Code\Core\ChunkStateExternal.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Core\Clipmap\Clipmap.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Core\Clipmap\ClipmapItem.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Configurable\Blocks\Configs\Dev_BlockConfig.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Core\Dev_LayerConfig.cs" />
+    <Compile Include="Assets\Voxelmetric\Code\Core\Dev_WorldConfig.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Core\GeometryHandler\ChunkColliderGeometryHandler.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Core\GeometryHandler\ChunkRenderGeometryHandler.cs" />
     <Compile Include="Assets\Voxelmetric\Code\Core\Operations\ModifyBlockContext.cs" />

@@ -4,11 +4,12 @@ using Voxelmetric.Code.Configurable.Blocks;
 using Voxelmetric.Code.Configurable.Blocks.Utilities;
 using Voxelmetric.Code.Core;
 using Voxelmetric.Code.Data_types;
-using Voxelmetric.Code.Load_Resources.Textures;
 using Voxelmetric.Code.Geometry;
 using Voxelmetric.Code.Geometry.GeometryBatcher;
+using Voxelmetric.Code.Load_Resources.Textures;
 
-public class CubeBlock: Block
+[System.Obsolete("Use 'Dev_CubeBlock' instead.")]
+public class CubeBlock : Block
 {
     public TextureCollection[] Textures
     {
@@ -23,7 +24,7 @@ public class CubeBlock: Block
         LocalPools pools = chunk.Pools;
         VertexData[] vertexData = pools.vertexDataArrayPool.PopExact(4);
         {
-            if (vertices==null)
+            if (vertices == null)
             {
                 Vector3 pos = face.pos;
                 vertexData[0].vertex = pos + BlockUtils.PaddingOffsets[d][0];

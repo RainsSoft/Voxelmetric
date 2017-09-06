@@ -6,6 +6,7 @@ using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Geometry.GeometryBatcher;
 using Voxelmetric.Code.Load_Resources.Blocks;
 
+[System.Obsolete("Use 'Dev_ConnectedMeshBlock' instead.")]
 public class ConnectedMeshBlock : CustomMeshBlock
 {
     public ConnectedMeshBlockConfig ConnectedMeshConfig { get { return (ConnectedMeshBlockConfig)m_Config; } }

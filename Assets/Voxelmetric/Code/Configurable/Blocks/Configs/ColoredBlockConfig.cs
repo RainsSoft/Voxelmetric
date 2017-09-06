@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Voxelmetric.Code.Core;
 
+[System.Obsolete("Use 'Dev_ColoredBlockConfig' instead.")]
 public class ColoredBlockConfig : BlockConfig
 {
     public readonly Color32[] colors = new Color32[6];

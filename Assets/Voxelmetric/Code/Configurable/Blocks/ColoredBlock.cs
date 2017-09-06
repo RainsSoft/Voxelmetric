@@ -7,6 +7,7 @@ using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Geometry;
 using Voxelmetric.Code.Geometry.GeometryBatcher;
 
+[System.Obsolete("Use 'Dev_ColoredBlock' instead.")]
 public class ColoredBlock : Block
 {
     public Color32[] Colors { get { return ((ColoredBlockConfig)m_Config).colors; } }

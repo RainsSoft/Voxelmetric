@@ -6,6 +6,7 @@ using Voxelmetric.Code.Core;
 using Voxelmetric.Code.Geometry;
 using Voxelmetric.Code.Load_Resources.Textures;
 
+[System.Obsolete("Use 'Dev_CustomMeshBlockConfig' instead.")]
 public class CustomMeshBlockConfig : BlockConfig
 {
     private TextureCollection[] m_Textures;

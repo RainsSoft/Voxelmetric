@@ -12,6 +12,7 @@ using Voxelmetric.Code.Load_Resources.Blocks;
 /// texture for each of them in the block's json config. Then a BlockConfig will be
 /// created for each block type and stored in BlockIndex referenced by the block type.
 /// </summary>
+[System.Obsolete("Use 'Dev_BlockConfig' instead.")]
 public class BlockConfig
 {
     //! Block type. Set externally by BlockIndex class when config is loaded

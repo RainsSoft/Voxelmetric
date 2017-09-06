@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d66a21bff3483742837802502544c5f, type: 3}
+  m_Name: Textured Grass
+  m_EditorClassIdentifier: 
+  m_BlockName: 
+  m_Type: 0
+  m_Solid: 0
+  m_Transparent: 0
+  m_RaycastHit: 0
+  m_RaycastHitOnRemoval: 0
+  m_RenderMaterialID: 0
+  m_PhysicMaterialID: 0
+  m_BaseTexture: {fileID: 2800000, guid: eb1ecfdffc22289459847a038f38ef81, type: 3}
+  m_BaseColor: {r: 1, g: 1, b: 1, a: 1}
+  m_Textures:
+    m_Top: {fileID: 2800000, guid: 1e01e659ba6c33046b3bad935d3d609a, type: 3}
+    m_TopColor: {r: 0, g: 0, b: 0, a: 0}
+    m_Bottom: {fileID: 2800000, guid: eb1ecfdffc22289459847a038f38ef81, type: 3}
+    m_BottomColor: {r: 0, g: 0, b: 0, a: 0}
+    m_North: {fileID: 2800000, guid: 9e0ccb185a7786c489f566e9c6cd92b0, type: 3}
+    m_NorthColor: {r: 0, g: 0, b: 0, a: 0}
+    m_Back: {fileID: 2800000, guid: 9e0ccb185a7786c489f566e9c6cd92b0, type: 3}
+    m_BackColor: {r: 0, g: 0, b: 0, a: 0}
+    m_East: {fileID: 2800000, guid: 9e0ccb185a7786c489f566e9c6cd92b0, type: 3}
+    m_EastColor: {r: 0, g: 0, b: 0, a: 0}
+    m_West: {fileID: 2800000, guid: 9e0ccb185a7786c489f566e9c6cd92b0, type: 3}
+    m_WestColor: {r: 0, g: 0, b: 0, a: 0}
+  m_Material: {fileID: 2100000, guid: 7fa2460a4614b844c9c80d1c0398b97d, type: 2}

@@ -4,6 +4,7 @@ using Voxelmetric.Code.Data_types;
 using Voxelmetric.Code.Geometry.GeometryBatcher;
 using Voxelmetric.Code.Load_Resources.Blocks;
 
+[System.Obsolete("Use 'Dev_CustomMeshBlock' instead.")]
 public class CustomMeshBlock : Block
 {
     public CustomMeshBlockConfig CustomMeshConfig { get { return (CustomMeshBlockConfig)m_Config; } }

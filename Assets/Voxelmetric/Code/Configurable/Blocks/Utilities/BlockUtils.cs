@@ -197,6 +197,7 @@ namespace Voxelmetric.Code.Configurable.Blocks.Utilities
             AdjustColorsAO(vertexData, light, chunk.World.Config.ambientOcclusionStrength);
         }
 
+        [System.Obsolete("Use PrepareTexture with BlockTextures instead.")]
         public static void PrepareTexture(Chunk chunk, ref Vector3Int localPos, VertexData[] vertexData, Direction direction, TextureCollection textureCollection, bool rotated)
         {
             Rect texture = textureCollection.GetTexture(chunk, ref localPos, direction);
@@ -217,6 +218,7 @@ namespace Voxelmetric.Code.Configurable.Blocks.Utilities
             }
         }
 
+        //[System.Obsolete("Use PrepareTexture with BlockTextures instead.")]
         public static void PrepareTexture(Chunk chunk, ref Vector3Int localPos, VertexData[] vertexData, Direction direction, TextureCollection[] textureCollections, bool rotated)
         {
             Rect texture = textureCollections[(int)direction].GetTexture(chunk, ref localPos, direction);

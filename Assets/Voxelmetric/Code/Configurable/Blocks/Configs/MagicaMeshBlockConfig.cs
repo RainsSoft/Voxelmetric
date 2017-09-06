@@ -13,6 +13,7 @@ using Voxelmetric.Code.Geometry;
 using Voxelmetric.Code.Load_Resources.Blocks;
 using Voxelmetric.Code.Utilities.Import;
 
+[System.Obsolete("Not implemented right now.")]
 public class MagicaMeshBlockConfig : BlockConfig
 {
     private RenderGeometryBuffer m_GeomBuffer = null;

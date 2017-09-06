@@ -9,6 +9,7 @@ using Voxelmetric.Code.Geometry.GeometryBatcher;
 using Voxelmetric.Code.Load_Resources.Blocks;
 using Voxelmetric.Code.Load_Resources.Textures;
 
+[System.Obsolete("Use 'Dev_CrossMeshBlock' instead.")]
 public class CrossMeshBlock : Block
 {
     private static readonly float coef = 1.0f / 64.0f;
